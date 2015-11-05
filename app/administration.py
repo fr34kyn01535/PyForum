@@ -8,11 +8,21 @@ class Request(object):
 	def __init__(self):
 		self.db = datenbank.Datenbank()
 		
-	def POST(self,originalusername,username,password,role):
-		user = self.db.getBenutzer(originalusername)
-		if password == "NO CHANGE":
-			password = user["Passwort"]
-		self.db.editBenutzer(originalusername,username,password,role)
+			
+	def POST(self,action,originalusername=None,username=None,password=None,role=None):
+		authentifizierung.ValidateAdmin()
+		if action == "delete":
+			self.db.deleteBenutzer(originalusername)
+		else:
+			if action == "add":
+				self.db.editBenutzer(None,"Neuer Benutzer","","Jedermann")
+				return self.GET()
+			else:
+				user = self.db.getBenutzer(originalusername)
+				if password == "NO CHANGE":
+					password = user["Passwort"]
+				self.db.editBenutzer(originalusername,username,password,role)
+			
 		if originalusername == cherrypy.session["Benutzername"]:
 			raise cherrypy.HTTPRedirect("/logout")
 		return self.GET()

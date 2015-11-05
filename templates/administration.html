@@ -9,6 +9,8 @@
 
 <br/>
 
+
+
 <div class="panel panel-default">
     <div class="panel-heading">Benutzer</div>
     <div class="panel-body">
@@ -19,7 +21,7 @@
 					<th>Benutzername</th>
 					<th>Passwort</th>
 					<th>Gruppe</th>
-					<th></th>
+					<th style="width: 290px;"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,7 +50,8 @@
 									>Jedermann</option>
 								</select>
 							</td>
-							<td><button class="btn btn-primary">Speichern</button></td>
+							<td><button name="action" value="save" class="btn btn-primary">Speichern</button>
+							<button name="action" value="delete" class="btn btn-warning">Löschen</button></td>
 						</tr>
 					</form>
 				%endfor
@@ -58,6 +61,11 @@
     </div>
 </div>
 
+<form style="float:right;" method="POST" action="/administration">
+	<button name="action" value="add" class="btn btn-raised btn-material-green"><i class="mdi-content-add"></i></button>
+</form>
+<div style="clear:both;"></div>
+<br>
 
 
 <%include file="footer.html"/>
