@@ -1,6 +1,6 @@
 # coding: utf-8
 import cherrypy
-from app import datenbank,templates
+from app import datenbank
 from mako.template import Template
 from mako.runtime import Context
 from mako.lookup import TemplateLookup

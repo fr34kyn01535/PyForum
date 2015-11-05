@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1446718586.038915
+_modified_time = 1446726738.2727041
 _enable_loop = True
 _template_filename = 'templates/header.html'
 _template_uri = 'header.html'
@@ -16,7 +16,7 @@ _exports = []
 def render_body(context,title,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        __M_locals = __M_dict_builtin(title=title,pageargs=pageargs)
+        __M_locals = __M_dict_builtin(pageargs=pageargs,title=title)
         __M_writer = context.writer()
         __M_writer('\r\n<!DOCTYPE html>\r\n<html>\r\n   <head>\r\n      <title>WEB | Forum | ')
         __M_writer(str(title))
@@ -28,6 +28,6 @@ def render_body(context,title,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "ascii", "filename": "templates/header.html", "uri": "header.html", "line_map": {"16": 1, "29": 23, "21": 1, "22": 5, "23": 5}}
+{"source_encoding": "ascii", "line_map": {"16": 1, "29": 23, "21": 1, "22": 5, "23": 5}, "uri": "header.html", "filename": "templates/header.html"}
 __M_END_METADATA
 """

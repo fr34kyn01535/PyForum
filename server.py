@@ -3,7 +3,7 @@
 import os.path
 import cherrypy
 
-from app import themen
+from app import themen,benutzer
 
 def main():
 	try:                                  
@@ -22,8 +22,8 @@ def main():
 	cherrypy.engine.timeout_monitor.unsubscribe()
 	
 	cherrypy.tree.mount(themen.Request(), '/', {'/': {'request.dispatch': cherrypy.dispatch.MethodDispatcher()}})
-	#cherrypy.tree.mount(diskussionen.Request(), '/diskussionen', {'/': {'request.dispatch': cherrypy.dispatch.MethodDispatcher()}})  
-	#cherrypy.tree.mount(benutzer.Request(), '/benutzer', {'/': {'request.dispatch': cherrypy.dispatch.MethodDispatcher()}})   
+	cherrypy.tree.mount(benutzer.Request(), '/benutzer', {'/': {'request.dispatch': cherrypy.dispatch.MethodDispatcher()}})
+	#cherrypy.tree.mount(diskussionen.Request(), '/diskussionen', {'/': {'request.dispatch': cherrypy.dispatch.MethodDispatcher()}})
 
 	cherrypy.engine.start()
 	cherrypy.engine.block() 
