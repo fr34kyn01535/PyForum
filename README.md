@@ -2,8 +2,8 @@
 Ein Forum welches für das Praktika WEB BI3 erstellt wurde.
 
 ##Autoren
-
-@fr34kyn01535 - Sven - 975524
+Michael (986485)
+Sven (975524) - fr34kyn01535
 
 ##Anforderungen
 * im Forum werden Themen behandelt
