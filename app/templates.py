@@ -13,6 +13,6 @@ def RenderTemplate(file, **kwargs):
 		userstatus="<li><a href=\"/logout\">"+cherrypy.session['Benutzername']+"</a>"
 	else:
 		userstatus="<li><a href=\"/login\">Einloggen</a></li>"
-	return template.render_unicode(**kwargs,userstatus=userstatus).encode('utf-8', 'replace')
+	return template.render_unicode(userstatus=userstatus,**kwargs).encode('utf-8', 'replace')
 	
 # EOF
