@@ -21,8 +21,7 @@ class Request(object):
 				cherrypy.session['Benutzername'] = username
 				cherrypy.session['Rolle'] = user["Rolle"]
 				raise cherrypy.HTTPRedirect("/")
-		else:
-			raise cherrypy.HTTPError(401) 
+		raise cherrypy.HTTPError(401) 
 		
 	def default(self, *arguments, **kwargs):
 		raise cherrypy.HTTPError(404,  str(arguments) + " " + str(kwargs)) 

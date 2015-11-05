@@ -6,12 +6,7 @@ import cherrypy
 from app import themen,login,logout
 
 def main():
-	try:                                  
-		currentDir_s = os.path.dirname(os.path.abspath(__file__))
-	except:
-		currentDir_s = os.path.dirname(os.path.abspath(sys.executable))
-	  
-	cherrypy.Application.currentDir_s = currentDir_s
+	cherrypy.Application.currentDir_s = os.path.dirname(os.path.abspath(__file__))
    
 	cherrypy.config.update({
 		'server.socket_host': '127.0.0.1', 
@@ -21,11 +16,23 @@ def main():
 	cherrypy.engine.autoreload.unsubscribe()
 	cherrypy.engine.timeout_monitor.unsubscribe()
 	
-	config = {'/': {'tools.sessions.on': True, 'request.dispatch': cherrypy.dispatch.MethodDispatcher()}};
+	dynamic = {'/': {
+		'tools.sessions.on': True, 
+		'request.dispatch': cherrypy.dispatch.MethodDispatcher()
+	}};
 	
-	cherrypy.tree.mount(themen.Request(), '/', config)
-	cherrypy.tree.mount(login.Request(), '/login', config)
-	cherrypy.tree.mount(logout.Request(), '/logout', config)
+	static = {'/': {  
+		'tools.gzip.on'       : True,
+		'tools.staticdir.on'  : True,
+		'tools.staticdir.dir' : os.path.join(cherrypy.Application.currentDir_s, 'static'),
+		'tools.expires.on'    : True,
+		'tools.expires.secs'  : 0
+	}};
+	
+	cherrypy.tree.mount(themen.Request(), '/', dynamic)
+	cherrypy.tree.mount(login.Request(), '/login', dynamic)
+	cherrypy.tree.mount(logout.Request(), '/logout', dynamic)
+	cherrypy.tree.mount(None, '/static', static)
 
 	cherrypy.engine.start()
 	cherrypy.engine.block() 
