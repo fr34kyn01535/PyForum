@@ -2,6 +2,10 @@
 
 import os.path
 import cherrypy
+import sys
+
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 from app import themen,diskussionen,login,logout
 
