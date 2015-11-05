@@ -12,8 +12,20 @@ class Datenbank(object):
 	def getThemen(self):
 		return os.listdir("./data/themen/")   
 	
-	def getDiskussionen(self):
-		return os.listdir("./data/diskussionen/")
+	def getDiskussionen(self, thema):
+		return os.listdir("./data/themen/" + thema)
+		
+	def createDiskussion(self, thema, discussionname):
+		pass
+
+	def deleteDiskussion(self, thema, discussionname):
+		pass
+
+	def editDiskussion(self, thema, discussionname):
+		pass
+
+	
+			
 
 	def loginBenutzer(self,username,password):
 		benutzer = self.getBenutzer(username)
@@ -61,4 +73,6 @@ class Datenbank(object):
 		outuserfile = "./data/benutzer/" + newusername + ".json";
 		with open(outuserfile, 'w') as outuser:
 			json.dump(user, outuser)
+
+
 # EOF
