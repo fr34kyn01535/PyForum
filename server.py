@@ -40,6 +40,14 @@ def main():
 		'tools.expires.on'    : True,
 		'tools.expires.secs'  : 0
 	}})
+	
+	cherrypy.tree.mount(None, '/fonts', {'/': {  
+		'tools.gzip.on'       : True,
+		'tools.staticdir.on'  : True,
+		'tools.staticdir.dir' : os.path.join(cherrypy.Application.currentDir_s, 'fonts'),
+		'tools.expires.on'    : True,
+		'tools.expires.secs'  : 0
+	}})
 
 	cherrypy.engine.start()
 	cherrypy.engine.block() 

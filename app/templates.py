@@ -10,9 +10,9 @@ def RenderTemplate(file, **kwargs):
 	template = templates.get_template(file)
 	
 	if 'Benutzername' in cherrypy.session:
-		userstatus="Eingeloggt als: "+cherrypy.session['Benutzername']+" ["+cherrypy.session['Rolle']+"] (<a href=\"/logout\">Ausloggen</a>)"
+		userstatus="<li><a href=\"/logout\">"+cherrypy.session['Benutzername']+"</a>"
 	else:
-		userstatus="Nicht eingeloggt. (<a href=\"/login\">Einloggen</a>)"
-	return template.render(**kwargs,userstatus=userstatus)
+		userstatus="<li><a href=\"/login\">Einloggen</a></li>"
+	return template.render_unicode(**kwargs,userstatus=userstatus).encode('utf-8', 'replace')
 	
 # EOF

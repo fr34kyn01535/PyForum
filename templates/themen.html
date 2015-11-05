@@ -1,8 +1,39 @@
+# coding: utf-8
 <%page args="title,themen"/>
 <%include file="header.html" args="title=title"/>
 
-%for thema in themen:
-    ${thema} | 
-%endfor
+<ul class="breadcrumb" style="margin-bottom: 5px;">
+    <li class="active"><a href="/">Startseite</a></li>
+</ul>
+<br>
+<div class="panel panel-default">
+    <div class="panel-heading">Themen</div>
+    <div class="panel-body">
+       
+	   
+	   <div class="list-group">
+	   %for thema in themen:
+    
+			<div class="list-group-item">
+				<div class="row-action-primary">
+					<i class="mdi-file-folder"></i>
+				</div>
+				<div class="row-content">
+					<div class="least-content"></div>
+					<h4 class="list-group-item-heading">${thema}</h4>
+					<p class="list-group-item-text"></p>
+				</div>
+			</div>
+			<div class="list-group-separator"></div>
+			
+		%endfor
+</div>
+	   
+	   
+	   
+    </div>
+</div>
+
+
 
 <%include file="footer.html"/>

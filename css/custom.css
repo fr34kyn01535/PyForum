@@ -6,9 +6,7 @@ body {
    font-family: 'PT Sans', sans-serif;
 }
 
-#userbar{
-	clear: both;
-    margin: 0 auto;
-    max-width: 1220px;
-    padding: 0 20px;
+#main{
+	margin-left:25px;
+	margin-right:25px;
 }
