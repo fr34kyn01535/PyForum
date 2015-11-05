@@ -8,6 +8,11 @@ from mako.lookup import TemplateLookup
 def RenderTemplate(file, **kwargs):
 	templates = TemplateLookup(directories=["./templates/"], module_directory="./modules/")
 	template = templates.get_template(file)
-	return template.render(**kwargs)
+	
+	if 'Benutzername' in cherrypy.session:
+		userstatus="Eingeloggt als: "+cherrypy.session['Benutzername']+" ["+cherrypy.session['Rolle']+"] (<a href=\"/logout\">Ausloggen</a>)"
+	else:
+		userstatus="Nicht eingeloggt. (<a href=\"/login\">Einloggen</a>)"
+	return template.render(**kwargs,userstatus=userstatus)
 	
 # EOF

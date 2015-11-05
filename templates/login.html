@@ -1,0 +1,8 @@
+<%page args="title"/>
+<%include file="header.html" args="title=title"/>
+	<form action="/login" id="login" method="POST">
+        <input type="text" name="username" placeholder="Benutzername" required="required" />
+        <input type="text" name="password" placeholder="Passwort" required="required"/>
+        <button type="submit">Einloggen</button>
+    </form>
+<%include file="footer.html"/>
