@@ -10,7 +10,7 @@ def main():
    
 	cherrypy.config.update({
 		'server.socket_host': '127.0.0.1', 
-		'server.socket_port': 81, 
+		'server.socket_port': 82, 
 	}) 
    
 	cherrypy.engine.autoreload.unsubscribe()
