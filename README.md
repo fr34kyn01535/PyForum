@@ -1,6 +1,10 @@
 # PyForum
 Ein Forum welches für das Praktika WEB BI3 erstellt wurde.
 
+##Autoren
+
+    [fr34kyn01535] - Sven - 975524
+
 ##Anforderungen
 * im Forum werden Themen behandelt
   * zu jedem Thema kann es N Diskussionen geben
