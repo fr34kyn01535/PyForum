@@ -10,10 +10,10 @@ def RenderTemplate(file, **kwargs):
 	template = templates.get_template(file)
 	role = "Jedermann";
 	if hasattr(cherrypy,"session") and 'Benutzername' in cherrypy.session:
-		userstatus="<li><a href=\"/logout\">"+cherrypy.session['Benutzername']+" ["+cherrypy.session['Rolle']+"]</a>"
+		userstatus="<li title="+cherrypy.session['Rolle']+"><a href=\"#\">"+cherrypy.session['Benutzername']+"</a></li><li><a style=\"padding:16px !important;\" href=\"/logout\" title=\"Ausloggen\"><i class=\"mdi-action-lock-outline\"></i></a></li>"
 		role = cherrypy.session['Rolle']
 	else:
-		userstatus="<li><a href=\"/login\">Einloggen</a></li>"
+		userstatus="<li><a style=\"padding:16px !important;\" href=\"/login\" title=\"Einloggen\"><i class=\"mdi-action-lock-open\"></i></a></li>"
 	return template.render_unicode(userstatus=userstatus,role=role,**kwargs).encode('utf-8', 'replace')
 	
 # EOF
