@@ -21,18 +21,25 @@ def main():
 		'request.dispatch': cherrypy.dispatch.MethodDispatcher()
 	}};
 	
-	static = {'/': {  
-		'tools.gzip.on'       : True,
-		'tools.staticdir.on'  : True,
-		'tools.staticdir.dir' : os.path.join(cherrypy.Application.currentDir_s, 'static'),
-		'tools.expires.on'    : True,
-		'tools.expires.secs'  : 0
-	}};
-	
 	cherrypy.tree.mount(themen.Request(), '/', dynamic)
 	cherrypy.tree.mount(login.Request(), '/login', dynamic)
 	cherrypy.tree.mount(logout.Request(), '/logout', dynamic)
-	cherrypy.tree.mount(None, '/static', static)
+	
+	cherrypy.tree.mount(None, '/js', {'/': {  
+		'tools.gzip.on'       : True,
+		'tools.staticdir.on'  : True,
+		'tools.staticdir.dir' : os.path.join(cherrypy.Application.currentDir_s, 'js'),
+		'tools.expires.on'    : True,
+		'tools.expires.secs'  : 0
+	}})
+	
+	cherrypy.tree.mount(None, '/css', {'/': {  
+		'tools.gzip.on'       : True,
+		'tools.staticdir.on'  : True,
+		'tools.staticdir.dir' : os.path.join(cherrypy.Application.currentDir_s, 'css'),
+		'tools.expires.on'    : True,
+		'tools.expires.secs'  : 0
+	}})
 
 	cherrypy.engine.start()
 	cherrypy.engine.block() 
