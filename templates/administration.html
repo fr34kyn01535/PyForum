@@ -1,0 +1,63 @@
+# coding: utf-8
+<%page args="title,benutzer"/>
+<%include file="header.html" args="title=title"/>
+
+<ul class="breadcrumb" style="margin-bottom: 5px;">
+	<li><a href="/">Startseite</a></li>
+    <li class="active">Administration</li>
+</ul>
+
+<br/>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Benutzer</div>
+    <div class="panel-body">
+       
+		<table class="table table-striped table-hover ">
+			<thead>
+				<tr>
+					<th>Benutzername</th>
+					<th>Passwort</th>
+					<th>Gruppe</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				%for nutzer in benutzer:
+					<form method="POST" action="/administration">
+						<tr>
+							<input type="hidden" name="originalusername" value="${nutzer["Benutzername"]}"/>
+							<td><input class="form-control" type="text" name="username" value="${nutzer["Benutzername"]}"/></td>
+							<td><input class="form-control" type="password" name="password" value="NO CHANGE"/></td>
+							<td>
+								<select class="form-control" name="role">
+									<option 
+									% if nutzer["Rolle"]=="Administrator": 
+										selected="selected"
+									% endif 
+									>Administrator</option>
+									<option
+									% if nutzer["Rolle"]=="Bearbeiter": 
+										selected="selected"
+									% endif 
+									>Bearbeiter</option>
+									<option 
+									% if nutzer["Rolle"]=="Jedermann": 
+										selected="selected"
+									% endif 
+									>Jedermann</option>
+								</select>
+							</td>
+							<td><button class="btn btn-primary">Speichern</button></td>
+						</tr>
+					</form>
+				%endfor
+			</tbody>
+		</table>
+			   
+    </div>
+</div>
+
+
+
+<%include file="footer.html"/>

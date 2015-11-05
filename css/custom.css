@@ -10,3 +10,7 @@ body {
 	margin-left:25px;
 	margin-right:25px;
 }
+
+.form-control{
+	padding-left: 10px !important;
+}

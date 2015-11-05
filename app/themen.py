@@ -9,7 +9,7 @@ class Request(object):
 		self.db = datenbank.Datenbank()
 		
 	def GET(self, id=None):
-		response = self.getThemen();
+		response = templates.RenderTemplate("themen.html",title="Themen",themen=self.db.getThemen());
 		if response == None:
 			cherrypy.response.status = 500
 		return response
@@ -17,6 +17,4 @@ class Request(object):
 	def default(self, *arguments, **kwargs):
 		raise cherrypy.HTTPError(404, "Invalid request: " + str(arguments) + " " + str(kwargs)) 
 		
-	def getThemen(self):
-		return templates.RenderTemplate("themen.html",title="Themen",themen=self.db.getThemen());
 # EOF

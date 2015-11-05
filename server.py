@@ -4,10 +4,22 @@ import os.path
 import cherrypy
 import sys
 
-reload(sys)
-sys.setdefaultencoding("utf-8")
+if sys.version[0] == '2':
+	reload(sys)
+	sys.setdefaultencoding("utf-8")
 
-from app import themen,diskussionen,login,logout
+from app import themen,diskussionen,login,logout,administration,templates
+
+
+
+def error_page(status, message, traceback, version):
+    return templates.RenderTemplate("error.html",title="Error",status=status,message=message,traceback=traceback,version=version);
+cherrypy.config.update({'error_page.default': error_page})
+cherrypy.config.update({'error_page.401': error_page})
+cherrypy.config.update({'error_page.402': error_page})
+cherrypy.config.update({'error_page.403': error_page})
+cherrypy.config.update({'error_page.404': error_page})
+cherrypy.config.update({'error_page.500': error_page})
 
 def main():
 	cherrypy.Application.currentDir_s = os.path.dirname(os.path.abspath(__file__))
@@ -25,9 +37,11 @@ def main():
 		'request.dispatch': cherrypy.dispatch.MethodDispatcher()
 	}};
 	
+	
 	cherrypy.tree.mount(themen.Request(), '/', dynamic)
 	cherrypy.tree.mount(login.Request(), '/login', dynamic)
 	cherrypy.tree.mount(logout.Request(), '/logout', dynamic)
+	cherrypy.tree.mount(administration.Request(), '/administration', dynamic)
 	
 	cherrypy.tree.mount(None, '/js', {'/': {  
 		'tools.gzip.on'       : True,

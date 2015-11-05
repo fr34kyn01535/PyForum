@@ -1,6 +1,7 @@
 # coding: utf-8
 import json
 import os
+from os import path
 
 class Datenbank(object):
 	exposed = True 
@@ -14,28 +15,6 @@ class Datenbank(object):
 	def getDiskussionen(self):
 		return os.listdir("./data/diskussionen/")
 
-	def check(self, param):
-		if param is None:
-			return "None"
-		else:
-			return str(param)
-	
-	def test(self):
-		print("Testing database...")
-		print("loginBenutzer(\"fr34kyn01535\",\"test\"): " + self.check(self.loginBenutzer("fr34kyn01535","test")));
-		print("loginBenutzer(\"fr34kyn01535\",\"asdasd\"): " + self.check(self.loginBenutzer("fr34kyn01535","asdasd")));
-		print("getBenutzer(\"fr34kyn01535\"): " + self.check(self.getBenutzer("fr34kyn01535")));
-		print("deleteBenutzer(\"fr34kyn01535\"): " + self.check(self.getBenutzer("fr34kyn01535")));
-		print("getBenutzer(\"fr34kyn01535\"): " + self.check(self.getBenutzer("fr34kyn01535")));
-		print("editBenutzer(None,\"fr34kyn01535\",\"test\",\"Administrator\"): " + self.check(self.editBenutzer(None,"fr34kyn01535","test","Administrator")));
-		print("getBenutzer(\"fr34kyn01535\"): " + self.check(self.getBenutzer("fr34kyn01535")));
-		print("editBenutzer(\"fr34kyn01535\",\"fr34kyn01535Test\",\"bla\",\"Benutzer\"): " + self.check(self.editBenutzer("fr34kyn01535","fr34kyn01535Test","bla","Benutzer")));
-		print("getBenutzer(\"fr34kyn01535\"): " + self.check(self.getBenutzer("fr34kyn01535")));
-		print("getBenutzer(\"fr34kyn01535Test\"): " + self.check(self.getBenutzer("fr34kyn01535Test")));
-		print("editBenutzer(\"fr34kyn01535Test\",\"fr34kyn01535\",\"test\",\"Administrator\"): " + self.check(self.editBenutzer("fr34kyn01535Test","fr34kyn01535","test","Administrator")));
-		print("getBenutzer(\"fr34kyn01535\"): " + self.check(self.getBenutzer("fr34kyn01535")));
-		print("getBenutzer(\"fr34kyn01535Test\"): " + self.check(self.getBenutzer("fr34kyn01535Test")));
-	
 	def loginBenutzer(self,username,password):
 		benutzer = self.getBenutzer(username)
 		if benutzer == None:
@@ -57,6 +36,19 @@ class Datenbank(object):
 		userfile = "./data/benutzer/" + username + ".json";
 		if os.path.isfile(userfile):
 			os.remove(userfile)
+	
+	def getAllBenutzer(self):
+		users = os.listdir("./data/benutzer/")
+		output = []
+		for user in users:
+			current = dict()
+			current["Benutzername"] = user.replace(".json","")
+			with open("./data/benutzer/"+user) as userfile:
+				userfilecontent = json.load(userfile)
+			current["Rolle"] = userfilecontent["Rolle"]
+			output.append(current)
+		return output
+	
 	
 	def editBenutzer(self,username,newusername,password,role):
 		if username is not None:

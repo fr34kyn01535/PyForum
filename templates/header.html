@@ -38,8 +38,9 @@
   <div class="navbar-collapse collapse navbar-responsive-collapse">
     <ul class="nav navbar-nav">
 		<li><a href="/">Startseite</a></li>
-		<li><a href="#">Impressum</a></li>
-		<li><a href="#">Über Uns</a></li>
+		% if role=="Administrator": 
+			<li><a href="/administration">Administration</a></li>
+		% endif
     </ul>
 	<ul class="nav navbar-nav navbar-right">
             ${userstatus}

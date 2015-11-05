@@ -1,0 +1,12 @@
+# coding: utf-8
+<%page/>
+<%include file="header.html" args="title=title+' '+status"/>
+
+<div class="jumbotron">
+    <h1>${status}</h1>
+    <p>${message}</p>
+    <pre>${traceback}</pre>
+    <p><a href="/" class="btn btn-primary btn-lg">Zur Startseite</a></p>
+</div>
+
+<%include file="footer.html"/>
