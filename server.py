@@ -3,7 +3,7 @@
 import os.path
 import cherrypy
 
-from app import themen,login,logout
+from app import themen,diskussionen,login,logout
 
 def main():
 	cherrypy.Application.currentDir_s = os.path.dirname(os.path.abspath(__file__))

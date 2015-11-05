@@ -1,0 +1,9 @@
+# coding: utf-8
+<%page args="title,diskussion"/>
+<%include file="header.html" args="title=title"/>
+
+%for diskussion in diskussionen:
+    ${diskussion} | 
+%endfor
+
+<%include file="footer.html"/>

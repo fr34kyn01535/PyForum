@@ -11,6 +11,9 @@ class Datenbank(object):
 	def getThemen(self):
 		return os.listdir("./data/themen/")   
 	
+	def getDiskussionen(self):
+		return os.listdir("./data/diskussionen/")
+
 	def check(self, param):
 		if param is None:
 			return "None"
