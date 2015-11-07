@@ -15,7 +15,7 @@ class Request(object):
 			return self.GET(thema)
 		#authentifizierung.ValidateAdmin()
 	"""	
-	def GET(self, thema,discussionname):
+	def GET(self,thema,discussionname):
 		response = self.getBeitraege(thema,discussionname);
 		if response == None:
 			cherrypy.response.status = 500

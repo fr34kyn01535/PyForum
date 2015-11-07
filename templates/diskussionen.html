@@ -9,18 +9,19 @@
 </ul>
 <br/>
 
+<div id="HiddneDiv" style="DISPLAY: none">
 <form method="POST" action="/thema">
 
 <ul class="wmfg_questions">
 	<input type="hidden" name="thema" value="${thema}"/>
 
 	<li class="wmfg_q">
-		<input type="text" class="form-control floating-label" placeholder="Titel" name="discussionname">
+		<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="discussionname">
 	</li>
 
 	<li class="wmfg_q">
 		
-		<textarea input type="text" class="form-control floating-label" placeholder="Text" name="text" style="height:180px"></textarea>
+		<textarea input type="text" class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>
 	</li>
 
 	<li class="wmfg_q">
@@ -29,10 +30,13 @@
 	</li>
 
 </ul>
+</div>
 
 </form>
-	
-<button style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
+
+% if role=="Administrator" or role=="Bearbeiter":
+<button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
+% endif
 </form>
 <div style="clear:both;"></div>
 
@@ -53,15 +57,31 @@
 				<div class="row-content">
 					<div class="least-content"></div>
 					<h4 class="list-group-item-heading"><a href="/diskussion?thema=${thema}&discussionname=${diskussion}">${diskussion["Titel"]}</a>
+					
+					% if role=="Administrator": 
+					<form method="POST" action="/thema">
+					<input type="hidden" name="thema" value="${thema}"/>
+					<input type="hidden" name="discussionname" value="${diskussion}"/>
+					<input type="text" name="newdiscussionname"/>
 					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
 					<button style="float:right;" name="action" value="edit" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
-					</h4>
-					
-					
-					<br>
+					</form>
+					% endif
+
+					</h4>					
+					<br/>
+
 					<p class="list-group-item-text">von ${diskussion["Ersteller"]} (${diskussion["Erstellt"]})</p>
-					
-					<p class="list-group-item-text"></p>
+
+
+
+  
+					% if 1: 
+	
+					<p class="list-group-item-text">zuletzt bearbeitet von ${diskussion["Bearbeiter"]} (${diskussion["Bearbeitet"]})</p>
+					% endif
+
+
 				</div>
 			</div>
 			
@@ -70,11 +90,23 @@
 		%endfor
 </div>
 	   
-	   
+ 
 	   
     </div>
 </div>
 
-<%include file="footer.html"/>
+<script>
 
+
+function ShowHide(){
+	if(document.getElementById("HiddneDiv").style.display == 'none'){
+		document.getElementById("HiddneDiv").style.display='block';
+	}else{
+		document.getElementById("HiddneDiv").style.display = 'none';
+	}
+}
+
+</script>	  
+
+<%include file="footer.html"/>
 
