@@ -2,6 +2,9 @@
 import cherrypy
 
 def IsLoggedIn():
+	cherrypy.session["Benutzername"] = "Test"
+	cherrypy.session["Rolle"] = "Bearbeiter"
+	return True
 	if 'Rolle' in cherrypy.session and cherrypy.session["Rolle"] is not "Jedermann":
 		return True
 	else:
@@ -18,3 +21,7 @@ def ValidateAdmin():
 		raise cherrypy.HTTPError(401) 
 	if not IsAdmin():
 		raise cherrypy.HTTPError(403) 
+
+def ValidateLoggedIn():
+	if not IsLoggedIn():
+		raise cherrypy.HTTPError(401) 

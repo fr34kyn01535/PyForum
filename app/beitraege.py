@@ -7,16 +7,16 @@ class Request(object):
 	
 	def __init__(self):
 		self.db = datenbank.Datenbank()
-
-	def POST(self,action,thema, discussionname,text):
+	"""
+	def POST(self,action,thema,discussionname,text):
 		authentifizierung.ValidateLoggedIn()
 		if action == "create":
 			self.db.createDiskussion(thema,discussionname, text)
 			return self.GET(thema)
 		#authentifizierung.ValidateAdmin()
-		
-	def GET(self, thema):
-		response = self.getDiskussionen(thema);
+	"""	
+	def GET(self, thema,discussionname):
+		response = self.getBeitraege(thema,discussionname);
 		if response == None:
 			cherrypy.response.status = 500
 		return response
@@ -24,8 +24,8 @@ class Request(object):
 	def default(self, *arguments, **kwargs):
 		raise cherrypy.HTTPError(404, "Invalid request: " + str(arguments) + " " + str(kwargs)) 
 		
-	def getDiskussionen(self, thema):
-		return templates.RenderTemplate("diskussionen.html",title="Diskussionen",diskussionen=self.db.getDiskussionen(thema), thema = thema);
+	def getBeitraege(self,thema,discussionname):
+		return templates.RenderTemplate("beitraege.html",title="Beitraege",beitraege=self.db.getBeitraege(thema,discussionname), thema = thema,discussionname = discussionname);
 
 	
 # EOF

@@ -8,7 +8,7 @@ if sys.version[0] == '2':
 	reload(sys)
 	sys.setdefaultencoding("utf-8")
 
-from app import themen,diskussionen,login,logout,administration,templates
+from app import themen,diskussionen,beitraege,login,logout,administration,templates
 
 
 
@@ -39,7 +39,9 @@ def main():
 	
 	
 	cherrypy.tree.mount(themen.Request(), '/', dynamic)
-	cherrypy.tree.mount(diskussionen.Request(), '/diskussionen', dynamic)
+	cherrypy.tree.mount(diskussionen.Request(), '/thema', dynamic)
+	cherrypy.tree.mount(beitraege.Request(), '/diskussion', dynamic)
+
 	cherrypy.tree.mount(login.Request(), '/login', dynamic)
 	cherrypy.tree.mount(logout.Request(), '/logout', dynamic)
 	cherrypy.tree.mount(administration.Request(), '/administration', dynamic)

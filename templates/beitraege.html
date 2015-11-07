@@ -1,4 +1,4 @@
-﻿# coding: utf-8
+# coding: utf-8
 <%page args="title,thema"/>
 <%include file="header.html" args="title=title"/>
 
@@ -32,39 +32,33 @@
 
 </form>
 	
-<button style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
+<button style="float:right;" class="btn btn-fab btn-raised btn-material-green"><i class="mdi-content-add"></i></button>
 </form>
 <div style="clear:both;"></div>
 
 <br/>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Diskussionen</div>
+    <div class="panel-heading">Beiträge</div>
     <div class="panel-body">
        
+	   
 	   <div class="list-group">
-	   %for diskussion in diskussionen:
-    		
-
+	   %for beitrag in beitraege:
+    
 			<div class="list-group-item">
 				<div class="row-action-primary">
 					<i class="mdi-file-folder"></i>
 				</div>
 				<div class="row-content">
 					<div class="least-content"></div>
-					<h4 class="list-group-item-heading"><a href="/diskussion?thema=${thema}&discussionname=${diskussion}">${diskussion["Titel"]}</a>
-					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
-					<button style="float:right;" name="action" value="edit" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
-					</h4>
-					
-					
+					<h3 class="list-group-item-heading">${beitrag["Titel"]}</h3>
 					<br>
-					<p class="list-group-item-text">von ${diskussion["Ersteller"]} (${diskussion["Erstellt"]})</p>
-					
-					<p class="list-group-item-text"></p>
+					<p class="list-group-item-text">${beitrag["Ersteller"]} (${beitrag["Erstellt"]})</p>
+					<br>
+					<p class="list-group-item-text">${beitrag["Text"]}</p>
 				</div>
 			</div>
-			
 			<div class="list-group-separator"></div>
 			
 		%endfor

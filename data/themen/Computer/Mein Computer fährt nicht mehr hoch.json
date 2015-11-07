@@ -1,25 +1,25 @@
 {
 	"Ersteller": "Minolyx", 
-	"Bearbeiter": NULL, 
+	"Bearbeiter": null, 
 	"Text": "balsbldfbalsdfhlabfla", 
 	"Erstellt": "2011-07-13 13:55:29 +0100", 
-	"Bearbeitet": NULL, 
-	"Beiträge": [ 
+	"Bearbeitet": null, 
+	"Beitraege": [ 
 		{
 			"Ersteller": "Minolyx", 
-			"Titel": "help"
-			"Bearbeiter": NULL, 
+			"Titel": "help",
+			"Bearbeiter": null, 
 			"Text": "balsbldfbalsdfhlabfla", 
 			"Erstellt": "2011-07-13 13:55:29 +0100", 
-			"Bearbeitet": NULL
+			"Bearbeitet": null
 		},
 		{
-			"Ersteller": "Minolyx", 
-			"Titel": "re:help"
-			"Bearbeiter": NULL, 
+			"Ersteller": "fr34kynoises", 
+			"Titel": "re:help",
+			"Bearbeiter": null, 
 			"Text": "balsbldfbalsdfhlabfla", 
 			"Erstellt": "2011-07-13 13:55:29 +0100", 
-			"Bearbeitet": NULL
+			"Bearbeitet": null
 		}
 	]
 }

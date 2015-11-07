@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1446735772.5397604
+_modified_time = 1446828024.9516764
 _enable_loop = True
 _template_filename = 'templates/login.html'
 _template_uri = 'login.html'
@@ -29,6 +29,6 @@ def render_body(context,title,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"16": 2, "21": 2, "22": 3, "23": 3, "24": 27, "30": 24}, "source_encoding": "utf-8", "uri": "login.html", "filename": "templates/login.html"}
+{"line_map": {"16": 2, "21": 2, "22": 3, "23": 3, "24": 27, "30": 24}, "filename": "templates/login.html", "uri": "login.html", "source_encoding": "utf-8"}
 __M_END_METADATA
 """
