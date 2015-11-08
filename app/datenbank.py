@@ -108,9 +108,12 @@ class Datenbank(object):
 		current["Erstellt"] = discussionfilecontent["Erstellt"]
 		current["Bearbeitet"] = discussionfilecontent["Bearbeitet"]
 		output.append(current)
+
+
 	#restlichen beiträge
 		if discussionfilecontent["Beitraege"] != " ":
 			for posts in discussionfilecontent["Beitraege"]:
+				current = dict()
 				current["Titel"] = posts["Titel"];
 				current["Ersteller"] = posts["Ersteller"]
 				current["Bearbeiter"] = posts["Bearbeiter"]
@@ -118,10 +121,9 @@ class Datenbank(object):
 				current["Erstellt"] = posts["Erstellt"]
 				current["Bearbeitet"] = posts["Bearbeitet"]
 				output.append(current)
-
+		
 		outputsorted = sorted(output, key=itemgetter('Erstellt'), reverse=True) 
-
-		return output
+		return outputsorted
 		
 
 	def createBeitrag(self,thema,discussionname,texttitle,text):
