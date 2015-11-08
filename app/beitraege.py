@@ -7,14 +7,14 @@ class Request(object):
 	
 	def __init__(self):
 		self.db = datenbank.Datenbank()
-	"""
+	
 	def POST(self,action,thema,discussionname,text):
 		authentifizierung.ValidateLoggedIn()
 		if action == "create":
-			self.db.createDiskussion(thema,discussionname, text)
+			self.db.createBeitrag(thema,discussionname,title,text)
 			return self.GET(thema)
 		#authentifizierung.ValidateAdmin()
-	"""	
+		
 	def GET(self,thema,discussionname):
 		response = self.getBeitraege(thema,discussionname);
 		if response == None:

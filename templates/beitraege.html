@@ -1,12 +1,11 @@
 # coding: utf-8
-<%page args="title,thema"/>
+<%page args="title,thema,discussionname"/>
 <%include file="header.html" args="title=title"/>
 
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="/">Startseite</a></li>
     <li><a href="/thema?thema=${thema}">${thema}</a></li>
-
-       
+    <li class="active">${discussionname}</li>
 </ul>
 <br/>
 
@@ -28,7 +27,6 @@
 					<td>
 						<div class="least-content"></div>						
 						<p class="list-group-item-text">${beitrag["Text"]}</p>
-
 					</td>
 				</table>
 			</div>
@@ -60,9 +58,10 @@
 <div id="HiddneDiv" style="DISPLAY: none">
 <ul class="wmfg_questions">
 	<input type="hidden" name="thema" value="${thema}"/>
+	<input type="hidden" name="discussionname" value="${discussionname}"/>
 
 	<li class="wmfg_q">
-		<input type="text" class="form-control floating-label" placeholder="Titel" name="discussionname">
+		<input type="text" class="form-control floating-label" placeholder="Titel" name="title">
 	</li>
 
 	<li class="wmfg_q">

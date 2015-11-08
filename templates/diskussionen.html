@@ -4,8 +4,7 @@
 
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="/">Startseite</a></li>
-    <li class="active">${thema}</li>
-    
+    <li class="active">${thema}</li>   
 </ul>
 <br/>
 
@@ -48,16 +47,19 @@
        
 	   <div class="list-group">
 	   %for diskussion in diskussionen:
-    		
-
+ 
 			<div class="list-group-item">
 				<div class="row-action-primary">
 					<i class="mdi-file-folder"></i>
 				</div>
 				<div class="row-content">
 					<div class="least-content"></div>
-					<h4 class="list-group-item-heading"><a href="/diskussion?thema=${thema}&discussionname=${diskussion["Titel"]}">${diskussion["Titel"]}</a>
-					
+
+					%if diskussion['Text'] == "!!!gelöscht!!!":
+						<h4 class="list-group-item-heading">${diskussion["Titel"]}</a>
+						%else:
+						<h4 class="list-group-item-heading"><a href="/diskussion?thema=${thema}&discussionname=${diskussion["Titel"]}">${diskussion["Titel"]}</a>
+					%endif
 					% if role=="Administrator": 
 						<form method="POST" action="/thema">
 						<input type="hidden" name="thema" value="${thema}"/>
@@ -74,7 +76,7 @@
 
 
   
-					% if 1: 
+					% if diskussion["Bearbeiter"] != " ": 
 	
 					<p class="list-group-item-text">zuletzt bearbeitet von ${diskussion["Bearbeiter"]} (${diskussion["Bearbeitet"]})</p>
 					% endif

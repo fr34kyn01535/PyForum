@@ -59,7 +59,7 @@ class Datenbank(object):
 		current["Titel"]  = discussionname + " [gelöscht!]";
 		current["Ersteller"] = discussionfilecontent["Ersteller"]
 		current["Bearbeiter"] = discussionfilecontent["Bearbeiter"]
-		current["Text"] = ""
+		current["Text"] = "!!!gelöscht!!!"
 		current["Erstellt"] = discussionfilecontent["Erstellt"]
 		current["Bearbeitet"] = " "
 		current["Beitraege"] = " "
@@ -73,16 +73,21 @@ class Datenbank(object):
 
 		
 
-	def editDiskussion(self, thema, discussionname, newdiscussionname,text=None):
-		#
+	def edit(self, thema,discussionname,titel,text,newtitle,newtext):
+		#discussionname
 		discussionfile = "./data/themen/" + thema +"/" + discussionname;
-		outfile = "./data/themen/" + thema +"/" + newdiscussionname + ".json";
+		outfile = "./data/themen/" + thema +"/" + newtitle + ".json";
 
 		with open(discussionfile, 'r') as currentfile:
 			current = json.load(currentfile)
-		current["Bearbeiter"] = cherrypy.session("Benutzername");
-		current["Bearbeitet"] = time.asctime();
-		current["Text"]  = text;
+		for key in current:
+			if current["Titel"] == title and current["Text"] == text:
+
+				current["Titel"] = newtitle
+				current["Text"]  = newtext
+				current["Bearbeiter"] = cherrypy.session("Benutzername");
+				current["Bearbeitet"] = time.asctime();
+				
 
 		with open(outfile, 'w') as out:
 			json.dump(current, out)
@@ -126,7 +131,7 @@ class Datenbank(object):
 		return outputsorted
 		
 
-	def createBeitrag(self,thema,discussionname,texttitle,text):
+	def createBeitrag(self,thema,discussionname,title,text):
 		discussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
 		post = dict()
 		with open(discussionfile) as discussionfilecontent:
