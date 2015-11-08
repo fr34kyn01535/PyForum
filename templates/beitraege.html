@@ -6,40 +6,8 @@
     <li><a href="/">Startseite</a></li>
     <li><a href="/thema?thema=${thema}">${thema}</a></li>
 
-    
-    
+       
 </ul>
-<br/>
-
-<div id="HiddneDiv" style="DISPLAY: none">
-<form method="POST" action="/thema">
-
-<ul class="wmfg_questions">
-	<input type="hidden" name="thema" value="${thema}"/>
-
-	<li class="wmfg_q">
-		<input type="text" class="form-control floating-label" placeholder="Titel" name="discussionname">
-	</li>
-
-	<li class="wmfg_q">
-		
-		<textarea input type="text" class="form-control floating-label" placeholder="Text" name="text" style="height:180px"></textarea>
-	</li>
-
-	<li class="wmfg_q">
-		<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
-
-	</li>
-
-</ul>
-</div>
-
-</form>
-	
-<button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
-</form>
-<div style="clear:both;"></div>
-
 <br/>
 
 <div class="panel panel-default">
@@ -51,9 +19,6 @@
 	   %for beitrag in beitraege:
     
 			<div class="list-group-item">
-				<div class="row-action-primary">
-					<i class="mdi-file-folder"></i>
-				</div>
 				<div class="row-content">
 					<div class="least-content"></div>
 					<h3 class="list-group-item-heading">${beitrag["Titel"]}</h3>
@@ -74,6 +39,40 @@
 	   
     </div>
 </div>
+<div style="clear:both;"></div>
+
+% if role=="Administrator" or role=="Bearbeiter":
+<button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
+% endif
+<div style="clear:both;"></div>
+
+<form method="POST" action="/thema">
+
+
+<div id="HiddneDiv" style="DISPLAY: none">
+<ul class="wmfg_questions">
+	<input type="hidden" name="thema" value="${thema}"/>
+
+	<li class="wmfg_q">
+		<input type="text" class="form-control floating-label" placeholder="Titel" name="discussionname">
+	</li>
+
+	<li class="wmfg_q">
+		
+		<textarea input type="text" class="form-control floating-label" placeholder="Text" name="text" style="height:180px"></textarea>
+	</li>
+
+	<li class="wmfg_q">
+		<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
+
+	</li>
+
+</ul>
+</div>
+</form>
+<div style="clear:both;"></div>
+
+<br/>
 
 <script>
 function ShowHide(){
