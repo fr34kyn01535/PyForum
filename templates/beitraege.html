@@ -18,22 +18,29 @@
 	   
 	   <div class="list-group">
 	   
-    
+   			<p class="list-group-item-text datum">(${beitrag["Erstellt"]})</p>
 			<div class="list-group-item">
 				
-				<div class="row-action-primary">
-					<p class="list-group-item-text">${beitrag["Ersteller"]}</p></i>
-				</div>
-				<div class="row-content">
-					<div class="least-content"></div>						
-					<p class="list-group-item-text">${beitrag["Text"]}</p>
-					<br>
-					<p class="list-group-item-text datum">(${beitrag["Erstellt"]})</p>
-				</div>
+				<table class="table">
+					<td style="width:100px;">
+						<p class="list-group-item-text">${beitrag["Ersteller"]}</p></i>
+					</td>
+					<td>
+						<div class="least-content"></div>						
+						<p class="list-group-item-text">${beitrag["Text"]}</p>
+
+					</td>
+				</table>
 			</div>
 			<div class="list-group-separator"></div>
-			
-
+			% if role=="Administrator": 
+				<form method="POST" action="/thema">
+				<input type="hidden" name="thema" value="${thema}"/>
+				<input type="hidden" name="discussionname" value="sollte der titel hin"/>
+				<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
+				<button style="float:right;" name="action" value="edit" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
+				</form>
+			% endif
 </div>
 	   
 	   

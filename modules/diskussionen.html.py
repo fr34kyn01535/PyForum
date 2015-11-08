@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1446983476.9200773
+_modified_time = 1446994208.4458854
 _enable_loop = True
 _template_filename = 'templates/diskussionen.html'
 _template_uri = 'diskussionen.html'
@@ -16,7 +16,7 @@ _exports = []
 def render_body(context,title,thema,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        __M_locals = __M_dict_builtin(title=title,pageargs=pageargs,thema=thema)
+        __M_locals = __M_dict_builtin(pageargs=pageargs,thema=thema,title=title)
         diskussionen = context.get('diskussionen', UNDEFINED)
         role = context.get('role', UNDEFINED)
         __M_writer = context.writer()
@@ -29,7 +29,7 @@ def render_body(context,title,thema,**pageargs):
         __M_writer('"/>\r\n\r\n\t<li class="wmfg_q">\r\n\t\t<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="discussionname">\r\n\t</li>\r\n\r\n\t<li class="wmfg_q">\r\n\t\t\r\n\t\t<textarea input type="text" class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>\r\n\t</li>\r\n\r\n\t<li class="wmfg_q">\r\n\t\t<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>\r\n\r\n\t</li>\r\n\r\n</ul>\r\n</div>\r\n\r\n</form>\r\n\r\n')
         if role=="Administrator" or role=="Bearbeiter":
             __M_writer('<button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>\r\n')
-        __M_writer('</form>\r\n<div style="clear:both;"></div>\r\n\r\n<br/>\r\n\r\n<div class="panel panel-default">\r\n    <div class="panel-heading">Diskussionen</div>\r\n    <div class="panel-body">\r\n       \r\n\t   <div class="list-group">\r\n')
+        __M_writer('\r\n<div style="clear:both;"></div>\r\n\r\n<br/>\r\n\r\n<div class="panel panel-default">\r\n    <div class="panel-heading">Diskussionen</div>\r\n    <div class="panel-body">\r\n       \r\n\t   <div class="list-group">\r\n')
         for diskussion in diskussionen:
             __M_writer('    \t\t\r\n\r\n\t\t\t<div class="list-group-item">\r\n\t\t\t\t<div class="row-action-primary">\r\n\t\t\t\t\t<i class="mdi-file-folder"></i>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class="row-content">\r\n\t\t\t\t\t<div class="least-content"></div>\r\n\t\t\t\t\t<h4 class="list-group-item-heading"><a href="/diskussion?thema=')
             __M_writer(filters.decode.utf8(thema))
@@ -39,11 +39,11 @@ def render_body(context,title,thema,**pageargs):
             __M_writer(filters.decode.utf8(diskussion["Titel"]))
             __M_writer('</a>\r\n\t\t\t\t\t\r\n')
             if role=="Administrator": 
-                __M_writer('\t\t\t\t\t<form method="POST" action="/thema">\r\n\t\t\t\t\t<input type="hidden" name="thema" value="')
+                __M_writer('\t\t\t\t\t\t<form method="POST" action="/thema">\r\n\t\t\t\t\t\t<input type="hidden" name="thema" value="')
                 __M_writer(filters.decode.utf8(thema))
-                __M_writer('"/>\r\n\t\t\t\t\t<input type="hidden" name="discussionname" value="')
+                __M_writer('"/>\r\n\t\t\t\t\t\t<input type="hidden" name="discussionname" value="')
                 __M_writer(filters.decode.utf8(diskussion["Titel"]))
-                __M_writer('"/>\r\n\t\t\t\t\t<input type="text" name="newdiscussionname"/>\r\n\t\t\t\t\t<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>\r\n\t\t\t\t\t<button style="float:right;" name="action" value="edit" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>\r\n\t\t\t\t\t</form>\r\n')
+                __M_writer('"/>\r\n\t\t\t\t\t\t<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>\r\n\t\t\t\t\t\t</form>\r\n')
             __M_writer('\r\n\t\t\t\t\t</h4>\t\t\t\t\t\r\n\t\t\t\t\t<br/>\r\n\r\n\t\t\t\t\t<p class="list-group-item-text">von ')
             __M_writer(filters.decode.utf8(diskussion["Ersteller"]))
             __M_writer(' (')
@@ -66,6 +66,6 @@ def render_body(context,title,thema,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "uri": "diskussionen.html", "filename": "templates/diskussionen.html", "line_map": {"67": 61, "16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 16, "29": 16, "30": 37, "31": 38, "32": 40, "33": 50, "34": 51, "35": 59, "36": 59, "37": 59, "38": 59, "39": 59, "40": 59, "41": 61, "42": 62, "43": 63, "44": 63, "45": 64, "46": 64, "47": 70, "48": 74, "49": 74, "50": 74, "51": 74, "52": 79, "53": 80, "54": 81, "55": 81, "56": 81, "57": 81, "58": 83, "59": 91, "60": 111, "61": 111}}
+{"filename": "templates/diskussionen.html", "source_encoding": "utf-8", "uri": "diskussionen.html", "line_map": {"67": 61, "16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 16, "29": 16, "30": 37, "31": 38, "32": 40, "33": 50, "34": 51, "35": 59, "36": 59, "37": 59, "38": 59, "39": 59, "40": 59, "41": 61, "42": 62, "43": 63, "44": 63, "45": 64, "46": 64, "47": 68, "48": 72, "49": 72, "50": 72, "51": 72, "52": 77, "53": 78, "54": 79, "55": 79, "56": 79, "57": 79, "58": 81, "59": 89, "60": 109, "61": 109}}
 __M_END_METADATA
 """

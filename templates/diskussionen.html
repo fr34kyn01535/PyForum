@@ -37,7 +37,7 @@
 % if role=="Administrator" or role=="Bearbeiter":
 <button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
 % endif
-</form>
+
 <div style="clear:both;"></div>
 
 <br/>
@@ -59,13 +59,11 @@
 					<h4 class="list-group-item-heading"><a href="/diskussion?thema=${thema}&discussionname=${diskussion["Titel"]}">${diskussion["Titel"]}</a>
 					
 					% if role=="Administrator": 
-					<form method="POST" action="/thema">
-					<input type="hidden" name="thema" value="${thema}"/>
-					<input type="hidden" name="discussionname" value="${diskussion["Titel"]}"/>
-					<input type="text" name="newdiscussionname"/>
-					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
-					<button style="float:right;" name="action" value="edit" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
-					</form>
+						<form method="POST" action="/thema">
+						<input type="hidden" name="thema" value="${thema}"/>
+						<input type="hidden" name="discussionname" value="${diskussion["Titel"]}"/>
+						<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
+						</form>
 					% endif
 
 					</h4>					

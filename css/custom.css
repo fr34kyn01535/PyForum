@@ -19,6 +19,12 @@ margin-bottom:5px;
 .datum{
 	font-size: .8em;
 }
+.beitrag table{
+	width: 100%;
+}
+.spaltenbreite{
+	width: 20%;
+}
 
 <style>	
 .wmfg_layout_1, table, .wmfg_textarea { font-family: Verdana, Geneva, sans-serif; font-size: 13px; }
