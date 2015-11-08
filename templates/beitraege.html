@@ -4,7 +4,9 @@
 
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="/">Startseite</a></li>
-    <li class="active">${thema}</li>
+    <li><a href="/thema?thema=${thema}">${thema}</a></li>
+    <li class="active">${diskussion["Titel"]}</li>
+    
     
 </ul>
 <br/>
@@ -55,6 +57,8 @@
 				<div class="row-content">
 					<div class="least-content"></div>
 					<h3 class="list-group-item-heading">${beitrag["Titel"]}</h3>
+
+
 					<br>
 					<p class="list-group-item-text">${beitrag["Ersteller"]} (${beitrag["Erstellt"]})</p>
 					<br>
@@ -70,6 +74,16 @@
 	   
     </div>
 </div>
+
+function ShowHide(){
+	if(document.getElementById("HiddneDiv").style.display == 'none'){
+		document.getElementById("HiddneDiv").style.display='block';
+	}else{
+		document.getElementById("HiddneDiv").style.display = 'none';
+	}
+}
+
+</script>	
 
 <%include file="footer.html"/>
 

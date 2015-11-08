@@ -6,6 +6,7 @@ import cherrypy
 import copy
 from os import path
 from app import authentifizierung
+from operator import itemgetter
 
 class Datenbank(object):
 	exposed = True 
@@ -19,7 +20,9 @@ class Datenbank(object):
 	def getDiskussionen(self, thema):
 		discussions = os.listdir("./data/themen/" + thema)
 		output = []
-		for discussion in discussions:
+		outputsorted = []
+		
+		for discussion in discussions:			
 			current = dict()
 			current["Titel"] = discussion.replace(".json","")
 			with open("./data/themen/"+ thema +"/" + discussion) as discussionfile:
@@ -32,43 +35,47 @@ class Datenbank(object):
 			current["Beitraege"] = discussionfilecontent["Beitraege"]
 			#current["BeitragID"] = discussionfilecontent["BeitragID"]
 			output.append(current)
-		return output
+		outputsorted = sorted(output, key=itemgetter('Erstellt'), reverse=True) 
+		return outputsorted
 		
 	def createDiskussion(self,thema,discussionname,text):
 		discussion = dict()
 		discussion["Ersteller"] = cherrypy.session["Benutzername"];
-		discussion["Bearbeiter"] = 0;
+		discussion["Bearbeiter"] = " ";
 		discussion["Text"] = text;
 		discussion["Erstellt"] = time.asctime();
-		discussion["Bearbeitet"] = 0;
-		discussion["Beitraege"] = 0;
+		discussion["Bearbeitet"] = " ";
+		discussion["Beitraege"] = " ";
 
 		outdiscussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
 		with open(outdiscussionfile, 'w') as outdiscussion:
 			json.dump(discussion, outdiscussion)
 	
 	def deleteDiskussion(self, thema, discussionname):
-		discussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
+		discussion = "./data/themen/"+ thema +"/" + discussionname + ".json"
 		current = dict()
+		with open("./data/themen/"+ thema +"/" + discussionname + ".json") as discussionfile:
+			discussionfilecontent = json.load(discussionfile)
+		current["Titel"]  = discussionname + " [gelöscht!]";
+		current["Ersteller"] = discussionfilecontent["Ersteller"]
+		current["Bearbeiter"] = discussionfilecontent["Bearbeiter"]
+		current["Text"] = ""
+		current["Erstellt"] = discussionfilecontent["Erstellt"]
+		current["Bearbeitet"] = " "
+		current["Beitraege"] = " "
 
-		with open(discussionfile, 'r') as discussionfilecontent:
-			discussioncontent = json.load(discussionfilecontent)
-		current["Ersteller"] = discussioncontent["Ersteller"];
-		current["Erstellt"] = discussioncontent["Erstellt"];
-		current["Titel"]  = "Diese  Diskussion Wurde vom Admin gelöscht";
-
-		outdiscussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
-		with open(outdiscussionfile, 'w') as outdiscussion:
-			json.dump(discussion, outdiscussion)
 		
-		if os.path.isfile(discussionfile):
-			os.remove(discussionfile)
+		outdiscussionfile = "./data/themen/" + thema +"/" + current["Titel"] + ".json";
+		with open(outdiscussionfile, 'w') as outdiscussion:
+			json.dump(current, outdiscussion)
+		
+		os.remove(discussion)
 
 		
 
 	def editDiskussion(self, thema, discussionname, newdiscussionname,text=None):
 		#
-		discussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
+		discussionfile = "./data/themen/" + thema +"/" + discussionname;
 		outfile = "./data/themen/" + thema +"/" + newdiscussionname + ".json";
 
 		with open(discussionfile, 'r') as currentfile:
@@ -86,30 +93,34 @@ class Datenbank(object):
 		
 
 	def getBeitraege(self,thema,discussionname):
-		discussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
+		discussion = "./data/themen/" + thema +"/" + discussionname + ".json";
 		output = []
+		outputsorted = []
 		current = dict()
-		with open(discussionfile, "r") as discussionfilecontent:
-			discussioncontent = json.load(discussionfilecontent)
+		with open(discussion, "r") as discussionfile:
+			discussionfilecontent = json.load(discussionfile)
 
 	#erste Beitrag(=diskussion) gesondert
 		current["Titel"] = discussionname;
-		current["Ersteller"] = discussioncontent["Ersteller"]
-		current["Bearbeiter"] = discussioncontent["Bearbeiter"]
-		current["Text"] = discussioncontent["Text"]
-		current["Erstellt"] = discussioncontent["Erstellt"]
-		current["Bearbeitet"] = discussioncontent["Bearbeitet"]
+		current["Ersteller"] = discussionfilecontent["Ersteller"]
+		current["Bearbeiter"] = discussionfilecontent["Bearbeiter"]
+		current["Text"] = discussionfilecontent["Text"]
+		current["Erstellt"] = discussionfilecontent["Erstellt"]
+		current["Bearbeitet"] = discussionfilecontent["Bearbeitet"]
 		output.append(current)
 	#restlichen beiträge
-		for posts in discussioncontent["Beitraege"]:
-			for post in posts:
-				current["Titel"] = post["Titel"];
-				current["Ersteller"] = post["Ersteller"]
-				current["Bearbeiter"] = post["Bearbeiter"]
-				current["Text"] = post["Text"]
-				current["Erstellt"] = post["Erstellt"]
-				current["Bearbeitet"] = post["Bearbeitet"]
+		if discussionfilecontent["Beitraege"] != " ":
+			for posts in discussionfilecontent["Beitraege"]:
+				current["Titel"] = posts["Titel"];
+				current["Ersteller"] = posts["Ersteller"]
+				current["Bearbeiter"] = posts["Bearbeiter"]
+				current["Text"] = posts["Text"]
+				current["Erstellt"] = posts["Erstellt"]
+				current["Bearbeitet"] = posts["Bearbeitet"]
 				output.append(current)
+
+		outputsorted = sorted(output, key=itemgetter('Erstellt'), reverse=True) 
+
 		return output
 		
 
@@ -121,10 +132,10 @@ class Datenbank(object):
 		
 		post["Titel"] = texttitle
 		post["Ersteller"] = cherrypy.session["Benutzername"];
-		post["Bearbeiter"] = 0;
+		post["Bearbeiter"] = " ";
 		post["Text"] = text;
 		post["Erstellt"] = time.asctime()
-		post["Bearbeitet"] = 0;
+		post["Bearbeitet"] = " ";
 
 		discussioncontent["Beitraege"].append(post)
 
