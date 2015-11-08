@@ -10,36 +10,37 @@
 </ul>
 <br/>
 
-<div class="panel panel-default">
-    <div class="panel-heading">Beiträge</div>
+%for beitrag in beitraege:
+<div class="panel panel-default beitrag">
+    <div class="panel-heading">${beitrag["Titel"]}</div>
     <div class="panel-body">
        
 	   
 	   <div class="list-group">
-	   %for beitrag in beitraege:
+	   
     
 			<div class="list-group-item">
+				
+				<div class="row-action-primary">
+					<p class="list-group-item-text">${beitrag["Ersteller"]}</p></i>
+				</div>
 				<div class="row-content">
-					<div class="least-content"></div>
-					<h3 class="list-group-item-heading">${beitrag["Titel"]}</h3>
-
-
-					<br>
-					<p class="list-group-item-text">${beitrag["Ersteller"]} (${beitrag["Erstellt"]})</p>
-					<br>
+					<div class="least-content"></div>						
 					<p class="list-group-item-text">${beitrag["Text"]}</p>
+					<br>
+					<p class="list-group-item-text datum">(${beitrag["Erstellt"]})</p>
 				</div>
 			</div>
 			<div class="list-group-separator"></div>
 			
-		%endfor
+
 </div>
 	   
 	   
 	   
     </div>
 </div>
-<div style="clear:both;"></div>
+%endfor
 
 % if role=="Administrator" or role=="Bearbeiter":
 <button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>

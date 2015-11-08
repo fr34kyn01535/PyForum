@@ -12,6 +12,14 @@ body {
 	padding-left: 10px !important;
 }
 
+.beitrag{
+margin-bottom:5px;
+}
+
+.datum{
+	font-size: .8em;
+}
+
 <style>	
 .wmfg_layout_1, table, .wmfg_textarea { font-family: Verdana, Geneva, sans-serif; font-size: 13px; }
 .wmfg_layout_1 ul.wmfg_questions { list-style-type: none; margin: 0; padding: 0; }

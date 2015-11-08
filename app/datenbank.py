@@ -122,7 +122,7 @@ class Datenbank(object):
 				current["Bearbeitet"] = posts["Bearbeitet"]
 				output.append(current)
 		
-		outputsorted = sorted(output, key=itemgetter('Erstellt'), reverse=True) 
+		outputsorted = sorted(output, key=itemgetter('Erstellt')) 
 		return outputsorted
 		
 
