@@ -86,7 +86,7 @@ class Datenbank(object):
 				current["Titel"] = newtitle
 				current["Text"]  = newtext
 				current["Bearbeiter"] = cherrypy.session("Benutzername");
-				current["Bearbeitet"] = time.asctime();
+				current["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime());
 				
 
 		with open(outfile, 'w') as out:
@@ -141,7 +141,7 @@ class Datenbank(object):
 		post["Ersteller"] = cherrypy.session["Benutzername"];
 		post["Bearbeiter"] = " ";
 		post["Text"] = text;
-		post["Erstellt"] = time.asctime()
+		post["Erstellt"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime());
 		post["Bearbeitet"] = " ";
 
 		discussioncontent["Beitraege"].append(post)
