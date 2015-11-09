@@ -4,9 +4,11 @@ import os
 import time
 import cherrypy
 import copy
+import uuid
 from os import path
 from app import authentifizierung
 from operator import itemgetter
+
 
 class Datenbank(object):
 	exposed = True 
@@ -24,76 +26,79 @@ class Datenbank(object):
 		
 		for discussion in discussions:			
 			current = dict()
-			current["Titel"] = discussion.replace(".json","")
+			
 			with open("./data/themen/"+ thema +"/" + discussion) as discussionfile:
 				discussionfilecontent = json.load(discussionfile)
+			current["Titel"] = discussionfilecontent["Titel"]
 			current["Ersteller"] = discussionfilecontent["Ersteller"]
 			current["Bearbeiter"] = discussionfilecontent["Bearbeiter"]
 			current["Text"] = discussionfilecontent["Text"]
 			current["Erstellt"] = discussionfilecontent["Erstellt"]
 			current["Bearbeitet"] = discussionfilecontent["Bearbeitet"]
 			current["Beitraege"] = discussionfilecontent["Beitraege"]
-			#current["BeitragID"] = discussionfilecontent["BeitragID"]
+			current["Status"] = discussionfilecontent["Status"]
+			current["BeitragID"] = discussionfilecontent["BeitragID"]
 			output.append(current)
 		outputsorted = sorted(output, key=itemgetter('Erstellt'), reverse=True) 
 		return outputsorted
 		
 	def createDiskussion(self,thema,discussionname,text):
+		
 		discussion = dict()
-		discussion["Ersteller"] = cherrypy.session["Benutzername"];
-		discussion["Bearbeiter"] = " ";
-		discussion["Text"] = text;
-		discussion["Erstellt"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime());
-		discussion["Bearbeitet"] = " ";
-		discussion["Beitraege"] = [ ];
+		discussion["Ersteller"] = cherrypy.session["Benutzername"]
+		discussion["Titel"] = discussionname
+		discussion["Bearbeiter"] = " "
+		discussion["Text"] = text
+		discussion["Erstellt"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+		discussion["Bearbeitet"] = " "
+		discussion["Beitraege"] = [ ]
+		discussion["Status"] = " "
+		discussion["BeitragID"] = str(uuid.uuid4())
 
-		outdiscussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
+		outdiscussionfile = "./data/themen/" + thema +"/" + discussionname + ".json"
 		with open(outdiscussionfile, 'w') as outdiscussion:
 			json.dump(discussion, outdiscussion,indent=4)
 	
 	def deleteDiskussion(self, thema, discussionname):
 		discussion = "./data/themen/"+ thema +"/" + discussionname + ".json"
-		current = dict()
+
 		with open("./data/themen/"+ thema +"/" + discussionname + ".json") as discussionfile:
 			discussionfilecontent = json.load(discussionfile)
-		current["Titel"]  = discussionname + " [gelöscht!]";
-		current["Ersteller"] = discussionfilecontent["Ersteller"]
-		current["Bearbeiter"] = discussionfilecontent["Bearbeiter"]
-		current["Text"] = "!!!gelöscht!!!"
-		current["Erstellt"] = discussionfilecontent["Erstellt"]
-		current["Bearbeitet"] = " "
-		current["Beitraege"] = [ ]
+		discussionfilecontent["Titel"]  = discussionname + " [gelöscht!]"		
+		discussionfilecontent["Bearbeiter"] = cherrypy.session["Benutzername"]
+		discussionfilecontent["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+		discussionfilecontent["Status"] = "gelöscht"
 
 		
-		outdiscussionfile = "./data/themen/" + thema +"/" + current["Titel"] + ".json";
+		outdiscussionfile = "./data/themen/" + thema +"/" + discussionfilecontent["Titel"] + ".json"
 		with open(outdiscussionfile, 'w') as outdiscussion:
-			json.dump(current, outdiscussion,indent=4)
+			json.dump(discussionfilecontent, outdiscussion,indent=4)
 		
 		os.remove(discussion)
 
 		
 
-	def edit(self, thema,discussionname,titel,text,newtitle,newtext):
+	def edit(self, thema,discussionname,beitragID,newtitle,newtext):
 		#
 		discussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
-		outfile = "./data/themen/" + thema +"/" + newtitle + ".json";
+		
 
 		with open(discussionfile, 'r') as currentfile:
 			current = json.load(currentfile)
-		for key in current:
-			if current["Titel"] == title and current["Text"] == text:
 
+		for key in current:
+			if current["BeitragID"] == beitragID:
 				current["Titel"] = newtitle
 				current["Text"]  = newtext
-				current["Bearbeiter"] = cherrypy.session("Benutzername");
-				current["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime());
+				current["Bearbeiter"] = cherrypy.session["Benutzername"]
+				current["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 				
-
+		outfile = "./data/themen/" + thema +"/" + newtitle + ".json";
 		with open(outfile, 'w') as out:
 			json.dump(current, out,indent=4)
 
-		if os.path.isfile(currentfile):
-			os.remove(currentfile)
+		if os.path.isfile(discussionfile):
+			os.remove(discussionfile)
 			pass
 		
 
@@ -106,12 +111,13 @@ class Datenbank(object):
 			discussionfilecontent = json.load(discussionfile)
 
 	#erste Beitrag(=diskussion) gesondert
-		current["Titel"] = discussionname;
+		current["Titel"] = discussionfilecontent["Titel"];
 		current["Ersteller"] = discussionfilecontent["Ersteller"]
 		current["Bearbeiter"] = discussionfilecontent["Bearbeiter"]
 		current["Text"] = discussionfilecontent["Text"]
 		current["Erstellt"] = discussionfilecontent["Erstellt"]
 		current["Bearbeitet"] = discussionfilecontent["Bearbeitet"]
+		current["BeitragID"] = discussionfilecontent["BeitragID"]
 		output.append(current)
 
 
@@ -125,6 +131,7 @@ class Datenbank(object):
 				current["Text"] = posts["Text"]
 				current["Erstellt"] = posts["Erstellt"]
 				current["Bearbeitet"] = posts["Bearbeitet"]
+				current["BeitragID"] = posts["BeitragID"]
 				output.append(current)
 		
 		outputsorted = sorted(output, key=itemgetter('Erstellt')) 
@@ -143,6 +150,7 @@ class Datenbank(object):
 		post["Text"] = text;
 		post["Erstellt"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime());
 		post["Bearbeitet"] = " ";
+		post["BeitragID"] = str(uuid.uuid4())
 
 		discussioncontent["Beitraege"].append(post)
 
@@ -150,8 +158,26 @@ class Datenbank(object):
 			json.dumps(discussioncontent,discussionfilecontent)
 
 	def deleteBeitrag(self,thema,discussionname,beitragID):
+		discussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
+		with open(discussionfile, "r") as discussion:
+			discussionfilecontent = json.load(discussion)
 
-		pass
+		if discussionfilecontent["BeitragID"] == beitragID:
+			discussionfilecontent["Titel"] = "!"
+			discussionfilecontent["Bearbeiter"] = cherrypy.session["Benutzername"]
+			discussionfilecontent["Text"] = "Dieser Beitrag wurde vom Admin gelöscht"
+			discussionfilecontent["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+		else:
+			for posts in discussionfilecontent["Beitraege"]:
+				if post["BeitragID"] == beitragID:
+					posts["Titel"] = "!"
+					posts["Bearbeiter"] = cherrypy.session["Benutzername"]
+					posts["Text"] = "Dieser Beitrag wurde vom Admin gelöscht"
+					posts["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())	
+
+		with open(discussionfile, 'w') as discussion:
+			json.dumps(discussionfilecontent, discussion)
+		
 	#def editBeitrag(self,thema,discussionname,beitragID):
 	# glaub editDiskussion sollte reichen
 		#pass

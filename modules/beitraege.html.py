@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1447069490.411941
+_modified_time = 1447086843.6711905
 _enable_loop = True
 _template_filename = 'templates/beitraege.html'
 _template_uri = 'beitraege.html'
@@ -16,9 +16,9 @@ _exports = []
 def render_body(context,title,thema,discussionname,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        __M_locals = __M_dict_builtin(discussionname=discussionname,pageargs=pageargs,title=title,thema=thema)
-        role = context.get('role', UNDEFINED)
+        __M_locals = __M_dict_builtin(title=title,discussionname=discussionname,pageargs=pageargs,thema=thema)
         beitraege = context.get('beitraege', UNDEFINED)
+        role = context.get('role', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\r\n')
         runtime._include_file(context, 'header.html', _template_uri, title=title)
@@ -38,7 +38,7 @@ def render_body(context,title,thema,discussionname,**pageargs):
             __M_writer(filters.decode.utf8(beitrag["Ersteller"]))
             __M_writer('</p></i>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t\t<td>\r\n\t\t\t\t\t\t<div class="least-content"></div>\t\t\t\t\t\t\r\n\t\t\t\t\t\t<p class="list-group-item-text">')
             __M_writer(filters.decode.utf8(beitrag["Text"]))
-            __M_writer('</p>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</table>\r\n\t\t\t</div>\r\n\t\t\t<div class="list-group-separator"></div>\r\n')
+            __M_writer('</p>\r\n\t\t\t\t\t</td>\r\n\t\t\t\t</table>\r\n\t\t\t</div>\r\n\t\t\t<div class="list-group-separator"></div>\r\n\r\n')
             if role=="Administrator": 
                 __M_writer('\t\t\t\t<form method="POST" action="/diskussion">\r\n\t\t\t\t\t<input type="hidden" name="thema" value="')
                 __M_writer(filters.decode.utf8(thema))
@@ -52,13 +52,11 @@ def render_body(context,title,thema,discussionname,**pageargs):
                 __M_writer(filters.decode.utf8(thema))
                 __M_writer('"/>\r\n\t\t\t\t\t<input type="hidden" name="discussionname" value="')
                 __M_writer(filters.decode.utf8(discussionname))
-                __M_writer('"/>\r\n\t\t\t\t\t<input type="hidden" name="title" value="')
+                __M_writer('"/>\r\n\t\t\t\t\t<input type="hidden" name="beitragID" value="')
+                __M_writer(filters.decode.utf8(beitrag["BeitragID"]))
+                __M_writer('"/>\r\n\t\t\t\t\t<li class="wmfg_q">\r\n\t\t\t\t\t\t<input type="text" class="form-control" name="newtitle" value="')
                 __M_writer(filters.decode.utf8(beitrag["Titel"]))
-                __M_writer('"/>\r\n\t\t\t\t\t<input type="hidden" name="text" value="')
-                __M_writer(filters.decode.utf8(beitrag["Text"]))
-                __M_writer('"/>\r\n\t\t\t\t\t<li class="wmfg_q">\r\n\t\t\t\t\t\t<input type="text" class="form-control" value="')
-                __M_writer(filters.decode.utf8(beitrag["Titel"]))
-                __M_writer('">\r\n\t\t\t\t\t</li>\r\n\r\n\t\t\t\t\t<li class="wmfg_q">\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t<textarea input type="text" class="form-control"  style="height:180px">')
+                __M_writer('">\r\n\t\t\t\t\t</li>\r\n\r\n\t\t\t\t\t<li class="wmfg_q">\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t<textarea input type="text" class="form-control"  name="newtext" style="height:180px">')
                 __M_writer(filters.decode.utf8(beitrag["Text"]))
                 __M_writer('</textarea>\r\n\t\t\t\t\t</li>\r\n\r\n\t\t\t\t\t<li class="wmfg_q">\r\n\t\t\t\t\t\t<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t\t</ul>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</form>\r\n\r\n')
             __M_writer('</div>\r\n\t   \r\n\t   \r\n\t   \r\n    </div>\r\n</div>\r\n')
@@ -79,6 +77,6 @@ def render_body(context,title,thema,discussionname,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 7, "29": 7, "30": 8, "31": 8, "32": 12, "33": 13, "34": 14, "35": 14, "36": 20, "37": 20, "38": 25, "39": 25, "40": 29, "41": 29, "42": 34, "43": 35, "44": 36, "45": 36, "46": 37, "47": 37, "48": 38, "49": 38, "50": 39, "51": 39, "52": 47, "53": 47, "54": 48, "55": 48, "56": 49, "57": 49, "58": 50, "59": 50, "60": 52, "61": 52, "62": 57, "63": 57, "64": 68, "65": 75, "66": 76, "67": 77, "68": 79, "69": 84, "70": 84, "71": 85, "72": 85, "73": 119, "74": 119, "80": 74}, "source_encoding": "utf-8", "uri": "beitraege.html", "filename": "templates/beitraege.html"}
+{"line_map": {"16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 7, "29": 7, "30": 8, "31": 8, "32": 12, "33": 13, "34": 14, "35": 14, "36": 20, "37": 20, "38": 25, "39": 25, "40": 29, "41": 29, "42": 35, "43": 36, "44": 37, "45": 37, "46": 38, "47": 38, "48": 39, "49": 39, "50": 40, "51": 40, "52": 48, "53": 48, "54": 49, "55": 49, "56": 50, "57": 50, "58": 52, "59": 52, "60": 57, "61": 57, "62": 68, "63": 75, "64": 76, "65": 77, "66": 79, "67": 84, "68": 84, "69": 85, "70": 85, "71": 119, "72": 119, "78": 72}, "filename": "templates/beitraege.html", "uri": "beitraege.html", "source_encoding": "utf-8"}
 __M_END_METADATA
 """

@@ -48,7 +48,7 @@
 				<div class="row-content">
 					<div class="least-content"></div>
 
-					%if diskussion['Text'] == "!!!gelöscht!!!":
+					%if diskussion['Status'] == "gelöscht":
 						<h4 class="list-group-item-heading">${diskussion["Titel"]}</a>
 						%else:
 						<h4 class="list-group-item-heading"><a href="/diskussion?thema=${thema}&discussionname=${diskussion["Titel"]}">${diskussion["Titel"]}</a>

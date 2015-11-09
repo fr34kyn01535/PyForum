@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1447063609.6551979
+_modified_time = 1447084311.4325252
 _enable_loop = True
 _template_filename = 'templates/diskussionen.html'
 _template_uri = 'diskussionen.html'
@@ -16,9 +16,9 @@ _exports = []
 def render_body(context,title,thema,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        __M_locals = __M_dict_builtin(thema=thema,title=title,pageargs=pageargs)
-        role = context.get('role', UNDEFINED)
+        __M_locals = __M_dict_builtin(title=title,thema=thema,pageargs=pageargs)
         diskussionen = context.get('diskussionen', UNDEFINED)
+        role = context.get('role', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\r\n')
         runtime._include_file(context, 'header.html', _template_uri, title=title)
@@ -32,7 +32,7 @@ def render_body(context,title,thema,**pageargs):
         __M_writer('\r\n<div style="clear:both;"></div>\r\n\r\n<br/>\r\n\r\n<div class="panel panel-default">\r\n    <div class="panel-heading">Diskussionen</div>\r\n    <div class="panel-body">\r\n       \r\n\t   <div class="list-group">\r\n')
         for diskussion in diskussionen:
             __M_writer(' \r\n\t\t\t<div class="list-group-item">\r\n\t\t\t\t<div class="row-action-primary">\r\n\t\t\t\t\t<i class="mdi-file-folder"></i>\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class="row-content">\r\n\t\t\t\t\t<div class="least-content"></div>\r\n\r\n')
-            if diskussion['Text'] == "!!!gelöscht!!!":
+            if diskussion['Status'] == "gelöscht":
                 __M_writer('\t\t\t\t\t\t<h4 class="list-group-item-heading">')
                 __M_writer(filters.decode.utf8(diskussion["Titel"]))
                 __M_writer('</a>\r\n')
@@ -72,6 +72,6 @@ def render_body(context,title,thema,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 14, "29": 14, "30": 29, "31": 30, "32": 32, "33": 42, "34": 43, "35": 51, "36": 52, "37": 52, "38": 52, "39": 53, "40": 54, "41": 54, "42": 54, "43": 54, "44": 54, "45": 54, "46": 54, "47": 56, "48": 57, "49": 58, "50": 58, "51": 59, "52": 59, "53": 63, "54": 67, "55": 67, "56": 67, "57": 67, "58": 72, "59": 73, "60": 74, "61": 74, "62": 74, "63": 74, "64": 76, "65": 84, "66": 104, "67": 104, "73": 67}, "uri": "diskussionen.html", "source_encoding": "utf-8", "filename": "templates/diskussionen.html"}
+{"filename": "templates/diskussionen.html", "uri": "diskussionen.html", "line_map": {"16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 14, "29": 14, "30": 29, "31": 30, "32": 32, "33": 42, "34": 43, "35": 51, "36": 52, "37": 52, "38": 52, "39": 53, "40": 54, "41": 54, "42": 54, "43": 54, "44": 54, "45": 54, "46": 54, "47": 56, "48": 57, "49": 58, "50": 58, "51": 59, "52": 59, "53": 63, "54": 67, "55": 67, "56": 67, "57": 67, "58": 72, "59": 73, "60": 74, "61": 74, "62": 74, "63": 74, "64": 76, "65": 84, "66": 104, "67": 104, "73": 67}, "source_encoding": "utf-8"}
 __M_END_METADATA
 """

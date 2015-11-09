@@ -8,7 +8,7 @@ class Request(object):
 	def __init__(self):
 		self.db = datenbank.Datenbank()
 
-	def POST(self,action,thema, discussionname,title=None,newtitle=None,text=None,newtext=None):
+	def POST(self,action,thema, discussionname,beitragID=None,newtitle=None,text=None,newtext=None):
 		authentifizierung.ValidateLoggedIn()
 		if action == "create":
 			self.db.createDiskussion(thema,discussionname, text)
@@ -16,7 +16,7 @@ class Request(object):
 		else:
 			authentifizierung.ValidateAdmin()
 			if action == "edit":
-				self.db.edit(thema,discussionname,title,text,newtitle,newtext)
+				self.db.edit(thema,discussionname,beitragID,newtitle,newtext)
 				return self.GET(thema)
 			else:
 				if action == "delete":

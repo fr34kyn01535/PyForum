@@ -31,6 +31,7 @@
 				</table>
 			</div>
 			<div class="list-group-separator"></div>
+
 			% if role=="Administrator": 
 				<form method="POST" action="/diskussion">
 					<input type="hidden" name="thema" value="${thema}"/>
@@ -46,15 +47,14 @@
 					<ul class="wmfg_questions">
 					<input type="hidden" name="thema" value="${thema}"/>
 					<input type="hidden" name="discussionname" value="${discussionname}"/>
-					<input type="hidden" name="title" value="${beitrag["Titel"]}"/>
-					<input type="hidden" name="text" value="${beitrag["Text"]}"/>
+					<input type="hidden" name="beitragID" value="${beitrag["BeitragID"]}"/>
 					<li class="wmfg_q">
-						<input type="text" class="form-control" value="${beitrag["Titel"]}">
+						<input type="text" class="form-control" name="newtitle" value="${beitrag["Titel"]}">
 					</li>
 
 					<li class="wmfg_q">
 						
-						<textarea input type="text" class="form-control"  style="height:180px">${beitrag["Text"]}</textarea>
+						<textarea input type="text" class="form-control"  name="newtext" style="height:180px">${beitrag["Text"]}</textarea>
 					</li>
 
 					<li class="wmfg_q">
