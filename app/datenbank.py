@@ -84,18 +84,18 @@ class Datenbank(object):
 		
 
 		with open(discussionfile, 'r') as currentfile:
-			current = json.load(currentfile)
+			discussionfilecontent = json.load(currentfile)
 
-		for key in current:
-			if current["BeitragID"] == beitragID:
-				current["Titel"] = newtitle
-				current["Text"]  = newtext
-				current["Bearbeiter"] = cherrypy.session["Benutzername"]
-				current["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+		for key in discussionfilecontent:
+			if discussionfilecontent["BeitragID"] == beitragID:
+				discussionfilecontent["Titel"] = newtitle
+				discussionfilecontent["Text"]  = newtext
+				discussionfilecontent["Bearbeiter"] = cherrypy.session["Benutzername"]
+				discussionfilecontent["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 				
 		outfile = "./data/themen/" + thema +"/" + newtitle + ".json";
 		with open(outfile, 'w') as out:
-			json.dump(current, out,indent=4)
+			json.dump(discussionfilecontent, out,indent=4)
 
 		if os.path.isfile(discussionfile):
 			os.remove(discussionfile)
@@ -152,7 +152,7 @@ class Datenbank(object):
 		post["Bearbeitet"] = " ";
 		post["BeitragID"] = str(uuid.uuid4())
 
-		discussioncontent["Beitraege"].append(post)
+		discussioncontent["Beitraege"].append(post.copy())
 
 		with open(discussionfile, 'w') as discussionfilecontent:
 			json.dumps(discussioncontent,discussionfilecontent)

@@ -17,6 +17,7 @@ class Request(object):
 			authentifizierung.ValidateAdmin()
 			if action == "edit":
 				self.db.edit(thema,discussionname,beitragID,newtitle,newtext)
+				discussionname = newtitle
 				return self.GET(thema,discussionname)
 			else:
 				if action == "delete":
