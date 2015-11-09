@@ -43,13 +43,13 @@ class Datenbank(object):
 		discussion["Ersteller"] = cherrypy.session["Benutzername"];
 		discussion["Bearbeiter"] = " ";
 		discussion["Text"] = text;
-		discussion["Erstellt"] = time.asctime();
+		discussion["Erstellt"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime());
 		discussion["Bearbeitet"] = " ";
-		discussion["Beitraege"] = " ";
+		discussion["Beitraege"] = [ ];
 
 		outdiscussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
 		with open(outdiscussionfile, 'w') as outdiscussion:
-			json.dump(discussion, outdiscussion)
+			json.dump(discussion, outdiscussion,indent=4)
 	
 	def deleteDiskussion(self, thema, discussionname):
 		discussion = "./data/themen/"+ thema +"/" + discussionname + ".json"
@@ -62,20 +62,20 @@ class Datenbank(object):
 		current["Text"] = "!!!gelöscht!!!"
 		current["Erstellt"] = discussionfilecontent["Erstellt"]
 		current["Bearbeitet"] = " "
-		current["Beitraege"] = " "
+		current["Beitraege"] = [ ]
 
 		
 		outdiscussionfile = "./data/themen/" + thema +"/" + current["Titel"] + ".json";
 		with open(outdiscussionfile, 'w') as outdiscussion:
-			json.dump(current, outdiscussion)
+			json.dump(current, outdiscussion,indent=4)
 		
 		os.remove(discussion)
 
 		
 
 	def edit(self, thema,discussionname,titel,text,newtitle,newtext):
-		#discussionname
-		discussionfile = "./data/themen/" + thema +"/" + discussionname;
+		#
+		discussionfile = "./data/themen/" + thema +"/" + discussionname + ".json";
 		outfile = "./data/themen/" + thema +"/" + newtitle + ".json";
 
 		with open(discussionfile, 'r') as currentfile:
@@ -90,7 +90,7 @@ class Datenbank(object):
 				
 
 		with open(outfile, 'w') as out:
-			json.dump(current, out)
+			json.dump(current, out,indent=4)
 
 		if os.path.isfile(currentfile):
 			os.remove(currentfile)
@@ -137,7 +137,7 @@ class Datenbank(object):
 		with open(discussionfile) as discussionfilecontent:
 			discussioncontent = json.load(discussionfilecontent)
 		
-		post["Titel"] = texttitle
+		post["Titel"] = title
 		post["Ersteller"] = cherrypy.session["Benutzername"];
 		post["Bearbeiter"] = " ";
 		post["Text"] = text;
@@ -145,6 +145,9 @@ class Datenbank(object):
 		post["Bearbeitet"] = " ";
 
 		discussioncontent["Beitraege"].append(post)
+
+		with open(discussionfile, 'w') as discussionfilecontent:
+			json.dumps(discussioncontent,discussionfilecontent)
 
 	def deleteBeitrag(self,thema,discussionname,beitragID):
 

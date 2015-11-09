@@ -9,29 +9,22 @@
 <br/>
 
 <div id="HiddneDiv" style="DISPLAY: none">
-<form method="POST" action="/thema">
-
-<ul class="wmfg_questions">
-	<input type="hidden" name="thema" value="${thema}"/>
-
-	<li class="wmfg_q">
-		<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="discussionname">
-	</li>
-
-	<li class="wmfg_q">
-		
-		<textarea input type="text" class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>
-	</li>
-
-	<li class="wmfg_q">
-		<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
-
-	</li>
-
-</ul>
-</div>
-
+	<form method="POST" action="/thema">
+	<ul class="wmfg_questions">
+		<input type="hidden" name="thema" value="${thema}"/>
+		<li class="wmfg_q">
+			<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="discussionname">
+		</li>
+		<li class="wmfg_q">
+			
+			<textarea input type="text" class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>
+		</li>
+		<li class="wmfg_q">
+			<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
+		</li>
+	</ul>
 </form>
+</div>
 
 % if role=="Administrator" or role=="Bearbeiter":
 <button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>

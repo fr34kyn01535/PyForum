@@ -32,12 +32,38 @@
 			</div>
 			<div class="list-group-separator"></div>
 			% if role=="Administrator": 
-				<form method="POST" action="/thema">
-				<input type="hidden" name="thema" value="${thema}"/>
-				<input type="hidden" name="discussionname" value="sollte der titel hin"/>
-				<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
-				<button style="float:right;" name="action" value="edit" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
+				<form method="POST" action="/diskussion">
+					<input type="hidden" name="thema" value="${thema}"/>
+					<input type="hidden" name="discussionname" value="${discussionname}"/>
+					<input type="hidden" name="title" value="${beitrag["Titel"]}"/>
+					<input type="hidden" name="text" value="${beitrag["Text"]}"/>
+					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
 				</form>
+
+				<button onclick="ShowHide('BearbeitenFormular')" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
+				<form method="POST" action="/diskussion">
+					<div id="BearbeitenFormular" style="DISPLAY: none">
+					<ul class="wmfg_questions">
+					<input type="hidden" name="thema" value="${thema}"/>
+					<input type="hidden" name="discussionname" value="${discussionname}"/>
+					<input type="hidden" name="title" value="${beitrag["Titel"]}"/>
+					<input type="hidden" name="text" value="${beitrag["Text"]}"/>
+					<li class="wmfg_q">
+						<input type="text" class="form-control" value="${beitrag["Titel"]}">
+					</li>
+
+					<li class="wmfg_q">
+						
+						<textarea input type="text" class="form-control"  style="height:180px">${beitrag["Text"]}</textarea>
+					</li>
+
+					<li class="wmfg_q">
+						<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>
+					</li>
+					</ul>
+					</div>
+				</form>
+
 			% endif
 </div>
 	   
@@ -48,14 +74,12 @@
 %endfor
 
 % if role=="Administrator" or role=="Bearbeiter":
-<button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
+<button onclick="ShowHide('ErstellenFormular')" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
 % endif
 <div style="clear:both;"></div>
 
-<form method="POST" action="/thema">
-
-
-<div id="HiddneDiv" style="DISPLAY: none">
+<form method="POST" action="/diskussion">
+<div id="ErstellenFormular" style="DISPLAY: none">
 <ul class="wmfg_questions">
 	<input type="hidden" name="thema" value="${thema}"/>
 	<input type="hidden" name="discussionname" value="${discussionname}"/>
@@ -82,11 +106,11 @@
 <br/>
 
 <script>
-function ShowHide(){
-	if(document.getElementById("HiddneDiv").style.display == 'none'){
-		document.getElementById("HiddneDiv").style.display='block';
+function ShowHide(id){
+	if(document.getElementById(id).style.display == 'none'){
+		document.getElementById(id).style.display='block';
 	}else{
-		document.getElementById("HiddneDiv").style.display = 'none';
+		document.getElementById(id).style.display = 'none';
 	}
 }
 

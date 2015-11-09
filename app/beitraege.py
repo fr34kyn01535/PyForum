@@ -8,11 +8,11 @@ class Request(object):
 	def __init__(self):
 		self.db = datenbank.Datenbank()
 	
-	def POST(self,action,thema,discussionname,text):
+	def POST(self,action,thema,discussionname,title,text):
 		authentifizierung.ValidateLoggedIn()
 		if action == "create":
 			self.db.createBeitrag(thema,discussionname,title,text)
-			return self.GET(thema)
+			return self.GET(thema,discussionname)
 		#authentifizierung.ValidateAdmin()
 		
 	def GET(self,thema,discussionname):

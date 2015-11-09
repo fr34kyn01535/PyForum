@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1447023786.5971885
+_modified_time = 1447063609.6551979
 _enable_loop = True
 _template_filename = 'templates/diskussionen.html'
 _template_uri = 'diskussionen.html'
@@ -16,17 +16,17 @@ _exports = []
 def render_body(context,title,thema,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        __M_locals = __M_dict_builtin(title=title,pageargs=pageargs,thema=thema)
-        diskussionen = context.get('diskussionen', UNDEFINED)
+        __M_locals = __M_dict_builtin(thema=thema,title=title,pageargs=pageargs)
         role = context.get('role', UNDEFINED)
+        diskussionen = context.get('diskussionen', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\r\n')
         runtime._include_file(context, 'header.html', _template_uri, title=title)
         __M_writer('\r\n\r\n<ul class="breadcrumb" style="margin-bottom: 5px;">\r\n    <li><a href="/">Startseite</a></li>\r\n    <li class="active">')
         __M_writer(filters.decode.utf8(thema))
-        __M_writer('</li>   \r\n</ul>\r\n<br/>\r\n\r\n<div id="HiddneDiv" style="DISPLAY: none">\r\n<form method="POST" action="/thema">\r\n\r\n<ul class="wmfg_questions">\r\n\t<input type="hidden" name="thema" value="')
+        __M_writer('</li>   \r\n</ul>\r\n<br/>\r\n\r\n<div id="HiddneDiv" style="DISPLAY: none">\r\n\t<form method="POST" action="/thema">\r\n\t<ul class="wmfg_questions">\r\n\t\t<input type="hidden" name="thema" value="')
         __M_writer(filters.decode.utf8(thema))
-        __M_writer('"/>\r\n\r\n\t<li class="wmfg_q">\r\n\t\t<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="discussionname">\r\n\t</li>\r\n\r\n\t<li class="wmfg_q">\r\n\t\t\r\n\t\t<textarea input type="text" class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>\r\n\t</li>\r\n\r\n\t<li class="wmfg_q">\r\n\t\t<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>\r\n\r\n\t</li>\r\n\r\n</ul>\r\n</div>\r\n\r\n</form>\r\n\r\n')
+        __M_writer('"/>\r\n\t\t<li class="wmfg_q">\r\n\t\t\t<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="discussionname">\r\n\t\t</li>\r\n\t\t<li class="wmfg_q">\r\n\t\t\t\r\n\t\t\t<textarea input type="text" class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>\r\n\t\t</li>\r\n\t\t<li class="wmfg_q">\r\n\t\t\t<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>\r\n\t\t</li>\r\n\t</ul>\r\n</form>\r\n</div>\r\n\r\n')
         if role=="Administrator" or role=="Bearbeiter":
             __M_writer('<button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>\r\n')
         __M_writer('\r\n<div style="clear:both;"></div>\r\n\r\n<br/>\r\n\r\n<div class="panel panel-default">\r\n    <div class="panel-heading">Diskussionen</div>\r\n    <div class="panel-body">\r\n       \r\n\t   <div class="list-group">\r\n')
@@ -72,6 +72,6 @@ def render_body(context,title,thema,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "filename": "templates/diskussionen.html", "uri": "diskussionen.html", "line_map": {"16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 15, "29": 15, "30": 36, "31": 37, "32": 39, "33": 49, "34": 50, "35": 58, "36": 59, "37": 59, "38": 59, "39": 60, "40": 61, "41": 61, "42": 61, "43": 61, "44": 61, "45": 61, "46": 61, "47": 63, "48": 64, "49": 65, "50": 65, "51": 66, "52": 66, "53": 70, "54": 74, "55": 74, "56": 74, "57": 74, "58": 79, "59": 80, "60": 81, "61": 81, "62": 81, "63": 81, "64": 83, "65": 91, "66": 111, "67": 111, "73": 67}}
+{"line_map": {"16": 2, "23": 2, "24": 3, "25": 3, "26": 7, "27": 7, "28": 14, "29": 14, "30": 29, "31": 30, "32": 32, "33": 42, "34": 43, "35": 51, "36": 52, "37": 52, "38": 52, "39": 53, "40": 54, "41": 54, "42": 54, "43": 54, "44": 54, "45": 54, "46": 54, "47": 56, "48": 57, "49": 58, "50": 58, "51": 59, "52": 59, "53": 63, "54": 67, "55": 67, "56": 67, "57": 67, "58": 72, "59": 73, "60": 74, "61": 74, "62": 74, "63": 74, "64": 76, "65": 84, "66": 104, "67": 104, "73": 67}, "uri": "diskussionen.html", "source_encoding": "utf-8", "filename": "templates/diskussionen.html"}
 __M_END_METADATA
 """
