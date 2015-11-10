@@ -1,5 +1,5 @@
 # PyForum
-Ein Forum welches für das Praktika WEB BI3 erstellt wurde.
+Ein Forum welches für das Praktika WEB BI3 erstellt wurde. 
 
 ##Autoren
 * Michael (986485)    |    [Minolyx](https://github.com/Minolyx)
@@ -37,4 +37,41 @@ Ein Forum welches für das Praktika WEB BI3 erstellt wurde.
 * Python 3.5.0
 * CherryPy 3.8.0
 * Mako 1.0.3
+
+##Beschreibung der Komponenten
+
+###Endpunkte
+* / -> Modul: themen
+  * GET(id=None)
+    
+* /diskussionen -> Modul: diskussionen
+  * GET(thema)
+  * POST(action,thema,id=None, title=None,text=None,beitragID=None)
+
+* /beitraege -> Modul: beitraege
+  * GET(thema,id)
+  * POST(action,thema,id,title=None,text=None,beitragID=None)
+
+* /login -> Modul: login
+  * GET()
+  * POST(username,password)
+
+* /logout -> Modul: logout
+  * GET()
+
+* /administration -> Modul: administration
+  * GET()
+  * POST(action,originalusername=None,username=None,password=None,role=None)
+  
+##Datenablage
+
+###Ordner
+./data/benutzer/
+Beinhaltet die .json Datein für die einzelnen Benutzer ./data/benutzer/<benutzer>.json
+
+./data/themen/
+Beinhaltet Ordner für die einzelnen Themen, welche untergeordnete Diskussionen enthalten ./data/themen/<thema>/<diskussion>.json
+
+
+                     
 
