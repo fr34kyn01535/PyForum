@@ -40,7 +40,11 @@ Ein Forum welches für das Praktika WEB BI3 erstellt wurde.
 
 ##Beschreibung der Komponenten
 
-###Endpunkte
+###Aufbau der Anwendung
+
+
+
+###API
 * / -> Modul: themen
   * GET(id=None)
     
