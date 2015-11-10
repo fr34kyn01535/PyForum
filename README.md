@@ -66,11 +66,13 @@ Ein Forum welches für das Praktika WEB BI3 erstellt wurde.
 ##Datenablage
 
 ###Ordner
-./data/benutzer/
-Beinhaltet die .json Datein für die einzelnen Benutzer ./data/benutzer/<benutzer>.json
+**./data/benutzer/**
 
-./data/themen/
-Beinhaltet Ordner für die einzelnen Themen, welche untergeordnete Diskussionen enthalten ./data/themen/<thema>/<diskussion>.json
+Beinhaltet die .json Datein für die einzelnen Benutzer ./data/benutzer/&lt;benutzer&gt;.json
+
+**./data/themen/**
+
+Beinhaltet Ordner für die einzelnen Themen, welche untergeordnete Diskussionen enthalten ./data/themen/&lt;thema&gt;/&lt;diskussion&gt;.json
 
 
                      
