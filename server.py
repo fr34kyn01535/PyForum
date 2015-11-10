@@ -26,7 +26,7 @@ def main():
    
 	cherrypy.config.update({
 		'server.socket_host': '0.0.0.0', 
-		'server.socket_port': 8080, 
+		'server.socket_port': 8082, 
 	}) 
    
 	cherrypy.engine.autoreload.unsubscribe()
@@ -39,8 +39,8 @@ def main():
 	
 	
 	cherrypy.tree.mount(themen.Request(), '/', dynamic)
-	cherrypy.tree.mount(diskussionen.Request(), '/thema', dynamic)
-	cherrypy.tree.mount(beitraege.Request(), '/diskussion', dynamic)
+	cherrypy.tree.mount(diskussionen.Request(), '/diskussionen', dynamic)
+	cherrypy.tree.mount(beitraege.Request(), '/beitraege', dynamic)
 	cherrypy.tree.mount(login.Request(), '/login', dynamic)
 	cherrypy.tree.mount(logout.Request(), '/logout', dynamic)
 	cherrypy.tree.mount(administration.Request(), '/administration', dynamic)

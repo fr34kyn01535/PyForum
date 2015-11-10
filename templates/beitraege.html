@@ -1,25 +1,82 @@
 # coding: utf-8
-<%page args="title,thema,discussionname"/>
+<%page args="title,thema,diskussion"/>
 <%include file="header.html" args="title=title"/>
 
 <ul class="breadcrumb" style="margin-bottom: 5px;">
     <li><a href="/">Startseite</a></li>
-    <li><a href="/thema?thema=${thema}">${thema}</a></li>
-    <li class="active">${discussionname}</li>
+    <li><a href="/diskussionen?thema=${thema}">${thema}</a></li>
+    <li class="active">${diskussion["Titel"]}</li>
 </ul>
 <br/>
 
-%for beitrag in beitraege:
+<div class="panel panel-default diskussion">
+    <div class="panel-heading">${diskussion["Titel"]}</div>
+    <div class="panel-body">
+	   <div class="list-group">
+   			<p class="list-group-item-text datum">(${diskussion["Erstellt"]})</p>
+			<div class="list-group-item">
+				<table class="table">
+					<td style="width:100px;">
+						<p class="list-group-item-text">${diskussion["Ersteller"]}</p></i>
+					</td>
+					<td>
+						<div class="least-content"></div>						
+						<p class="list-group-item-text">${diskussion["Text"]}</p>
+					</td>
+				</table>
+			</div>
+			<div class="list-group-separator"></div>
+
+			% if role=="Administrator": 
+				<form method="POST" action="/diskussionen">
+					<input type="hidden" name="thema" value="${thema}"/>
+					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
+				</form>
+			% endif
+			% if role=="Administrator" or diskussion["Bearbeitbar"] == True: 
+
+				<button onclick="ShowHide('BearbeitenFormular')" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
+				<form method="POST" action="/beitraege">
+					<div id="BearbeitenFormular" style="DISPLAY: none">
+					<ul class="wmfg_questions">
+					<input type="hidden" name="thema" value="${thema}"/>
+					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+					<li class="wmfg_q">
+						<input type="text" class="form-control" name="title" value="${diskussion["Titel"]}">
+					</li>
+
+					<li class="wmfg_q">
+						
+						<textarea input type="text" class="form-control"  name="text" style="height:180px">${diskussion["Text"]}</textarea>
+					</li>
+
+					<li class="wmfg_q">
+						<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>
+					</li>
+					</ul>
+					</div>
+				</form>
+			% endif
+</div>
+    </div>
+</div>
+
+%for beitrag in diskussion["Beitraege"]:
+
 <div class="panel panel-default beitrag">
     <div class="panel-heading">${beitrag["Titel"]}</div>
     <div class="panel-body">
-       
+	   
+	   %if beitrag["Status"] == "deleted":
+	   
+			Dieser Beitrag wurde gelöscht.
+	   
+	   %else:
 	   
 	   <div class="list-group">
-	   
    			<p class="list-group-item-text datum">(${beitrag["Erstellt"]})</p>
 			<div class="list-group-item">
-				
 				<table class="table">
 					<td style="width:100px;">
 						<p class="list-group-item-text">${beitrag["Ersteller"]}</p></i>
@@ -33,28 +90,29 @@
 			<div class="list-group-separator"></div>
 
 			% if role=="Administrator": 
-				<form method="POST" action="/diskussion">
+				<form method="POST" action="/beitraege">
 					<input type="hidden" name="thema" value="${thema}"/>
-					<input type="hidden" name="discussionname" value="${discussionname}"/>
-					<input type="hidden" name="title" value="${beitrag["Titel"]}"/>
-					<input type="hidden" name="text" value="${beitrag["Text"]}"/>
+					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+					<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
 					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
 				</form>
+			% endif
 
+			% if role=="Administrator" or beitrag["Bearbeitbar"] == True: 
 				<button onclick="ShowHide('BearbeitenFormular')" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
-				<form method="POST" action="/diskussion">
+				<form method="POST" action="/beitraege">
 					<div id="BearbeitenFormular" style="DISPLAY: none">
 					<ul class="wmfg_questions">
 					<input type="hidden" name="thema" value="${thema}"/>
-					<input type="hidden" name="discussionname" value="${discussionname}"/>
-					<input type="hidden" name="beitragID" value="${beitrag["BeitragID"]}"/>
+					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+					<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
 					<li class="wmfg_q">
-						<input type="text" class="form-control" name="newtitle" value="${beitrag["Titel"]}">
+						<input type="text" class="form-control" name="title" value="${beitrag["Titel"]}">
 					</li>
 
 					<li class="wmfg_q">
 						
-						<textarea input type="text" class="form-control"  name="newtext" style="height:180px">${beitrag["Text"]}</textarea>
+						<textarea input type="text" class="form-control"  name="text" style="height:180px">${beitrag["Text"]}</textarea>
 					</li>
 
 					<li class="wmfg_q">
@@ -63,26 +121,25 @@
 					</ul>
 					</div>
 				</form>
-
 			% endif
 </div>
-	   
-	   
-	   
+
+% endif
+
     </div>
 </div>
 %endfor
 
 % if role=="Administrator" or role=="Bearbeiter":
-<button onclick="ShowHide('ErstellenFormular')" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
+<button onclick="ShowHide('ErstellenFormular')" style="float:right;" class="btn btn-raised btn-material-green"><i class="mdi-content-add"></i></button>
 % endif
 <div style="clear:both;"></div>
-
-<form method="POST" action="/diskussion">
+ 
+<form method="POST" action="/beitraege">
 <div id="ErstellenFormular" style="DISPLAY: none">
 <ul class="wmfg_questions">
 	<input type="hidden" name="thema" value="${thema}"/>
-	<input type="hidden" name="discussionname" value="${discussionname}"/>
+	<input type="hidden" name="id" value="${diskussion["ID"]}"/>
 
 	<li class="wmfg_q">
 		<input type="text" class="form-control floating-label" placeholder="Titel" name="title">

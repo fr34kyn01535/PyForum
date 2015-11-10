@@ -2,9 +2,6 @@
 import cherrypy
 
 def IsLoggedIn():
-	#cherrypy.session["Benutzername"] = "Test"
-	#cherrypy.session["Rolle"] = "Administrator"
-	#return True
 	if 'Rolle' in cherrypy.session and cherrypy.session["Rolle"] is not "Jedermann":
 		return True
 	else:

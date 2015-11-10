@@ -3,17 +3,17 @@
 <%include file="header.html" args="title=title"/>
 
 <ul class="breadcrumb" style="margin-bottom: 5px;">
-    <li><a href="/">Startseite</a></li>
+    <li><a href="/">Startseite</a></li> 	
     <li class="active">${thema}</li>   
 </ul>
 <br/>
 
 <div id="HiddneDiv" style="DISPLAY: none">
-	<form method="POST" action="/thema">
+	<form method="POST" action="/diskussionen">
 	<ul class="wmfg_questions">
 		<input type="hidden" name="thema" value="${thema}"/>
 		<li class="wmfg_q">
-			<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="discussionname">
+			<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="title">
 		</li>
 		<li class="wmfg_q">
 			
@@ -26,8 +26,8 @@
 </form>
 </div>
 
-% if role=="Administrator" or role=="Bearbeiter":
-<button onclick="ShowHide()" style="float:right;" class="btn btn-fab btn-raised btn-material-green btn-xs"><i class="mdi-content-add"></i></button>
+% if role=="Administrator" or role=="Bearbeiter": 	 	
+<button onclick="ShowHide()" style="float:right;" class="btn btn-raised btn-material-green"><i class="mdi-content-add"></i></button>
 % endif
 
 <div style="clear:both;"></div>
@@ -48,15 +48,16 @@
 				<div class="row-content">
 					<div class="least-content"></div>
 
-					%if diskussion['Status'] == "gelöscht":
+					%if diskussion["Status"] == "deleted":
 						<h4 class="list-group-item-heading">${diskussion["Titel"]}</a>
 						%else:
-						<h4 class="list-group-item-heading"><a href="/diskussion?thema=${thema}&discussionname=${diskussion["Titel"]}">${diskussion["Titel"]}</a>
+						<h4 class="list-group-item-heading"><a href="/beitraege?thema=${thema}&id=${diskussion["ID"]}">${diskussion["Titel"]}</a>
 					%endif
+					
 					% if role=="Administrator": 
-						<form method="POST" action="/thema">
+						<form method="POST" action="/diskussionen">
 						<input type="hidden" name="thema" value="${thema}"/>
-						<input type="hidden" name="discussionname" value="${diskussion["Titel"]}"/>
+						<input type="hidden" name="id" value="${diskussion["ID"]}"/>
 						<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
 						</form>
 					% endif
@@ -66,12 +67,8 @@
 
 					<p class="list-group-item-text">von ${diskussion["Ersteller"]} (${diskussion["Erstellt"]})</p>
 
-
-
-  
 					% if diskussion["Bearbeiter"] != " ": 
-	
-					<p class="list-group-item-text">zuletzt bearbeitet von ${diskussion["Bearbeiter"]} (${diskussion["Bearbeitet"]})</p>
+						<p class="list-group-item-text">zuletzt bearbeitet von ${diskussion["Bearbeiter"]} (${diskussion["Bearbeitet"]})</p>
 					% endif
 
 

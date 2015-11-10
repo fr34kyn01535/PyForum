@@ -1,0 +1,42 @@
+{
+    "Bearbeiter": " ",
+    "Erstellt": "2015-11-10 10:22:38",
+    "ID": "cb32bf8b-0fb1-46df-9ebb-fcf847a8f092",
+    "Ersteller": "test",
+    "Bearbeitet": " ",
+    "Text": "ihr nicht b\u00e4\u00e4\u00e4hhh",
+    "Status": " ",
+    "Titel": "Ich habe eine neuen Computer",
+    "Beitraege": [
+        {
+            "Erstellt": "2015-11-10 10:40:13",
+            "ID": "e7046831-c195-44a0-846e-8ffafda68612",
+            "Ersteller": "test",
+            "Bearbeitet": "2015-11-10 10:44:10",
+            "Text": "asdasddassdasd",
+            "Status": " ",
+            "Titel": "asdasdasd2313",
+            "Bearbeiter": "test"
+        },
+        {
+            "Erstellt": "2015-11-10 10:50:06",
+            "ID": "c2d8bbbf-d5cf-4ff6-b4a3-4606c571205d",
+            "Ersteller": "b",
+            "Bearbeitet": " ",
+            "Text": "lorem",
+            "Status": " ",
+            "Titel": "test",
+            "Bearbeiter": " "
+        },
+        {
+            "Erstellt": "2015-11-10 10:50:14",
+            "ID": "8fe4f558-8b19-4cdc-b597-38243f9fa48a",
+            "Ersteller": "b",
+            "Bearbeitet": " ",
+            "Text": "bl",
+            "Status": " ",
+            "Titel": "test2",
+            "Bearbeiter": " "
+        }
+    ]
+}

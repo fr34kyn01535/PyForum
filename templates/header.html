@@ -43,7 +43,17 @@
 		% endif
     </ul>
 	<ul class="nav navbar-nav navbar-right">
-            ${userstatus}
+           
+			% if username=="Gast" :	
+				<li><a style="padding:16px !important;" href="/login" title="Einloggen"><i class="mdi-action-lock-open"></i></a></li>
+			% else: 
+				<li title="${role}"><a href="#">${username}</a></li><li><a style="padding:16px !important;" href="/logout" title="Ausloggen"><i class="mdi-action-lock-outline"></i></a></li>
+			% endif
+			
+			
+			
+		
+		
         </ul>
   </div>
 </div>

@@ -17,4 +17,4 @@ class Request(object):
 	def default(self, *arguments, **kwargs):
 		raise cherrypy.HTTPError(404, "Invalid request: " + str(arguments) + " " + str(kwargs)) 
 		
-# EOF
+# EOF 

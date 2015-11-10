@@ -8,25 +8,24 @@ class Request(object):
 	def __init__(self):
 		self.db = datenbank.Datenbank()
 	
-	def POST(self,action,thema,discussionname,beitragID=None,title=None,newtitle=None,text=None,newtext=None):
+	def POST(self,action,thema,id,title=None,text=None,beitragID=None):
 		authentifizierung.ValidateLoggedIn()
 		if action == "create":
-			self.db.createBeitrag(thema,discussionname,title,text)
-			return self.GET(thema,discussionname)
+			self.db.createBeitrag(thema,id,title,text)
+			return self.GET(thema,id)
 		else:
-			authentifizierung.ValidateAdmin()
+			authentifizierung.ValidateLoggedIn()
 			if action == "edit":
-				self.db.edit(thema,discussionname,beitragID,newtitle,newtext)
-				discussionname = newtitle
-				return self.GET(thema,discussionname)
+				self.db.edit(thema,id,title,text,beitragID)
+				return self.GET(thema,id)
 			else:
+				authentifizierung.ValidateAdmin()
 				if action == "delete":
-					self.db.deleteBeitrag(thema,discussionname,beitragID)
-				return self.GET(thema,discussionname)
-		#authentifizierung.ValidateAdmin()
+					self.db.delete(thema, id,beitragID)
+					raise cherrypy.HTTPRedirect("/diskussionen?thema="+thema)
 		
-	def GET(self,thema,discussionname):
-		response = self.getBeitraege(thema,discussionname);
+	def GET(self,thema,id):
+		response = templates.RenderTemplate("beitraege.html",title="Beitraege",diskussion=self.db.getDiskussion(thema,id), thema = thema);
 		if response == None:
 			cherrypy.response.status = 500
 		return response
@@ -34,8 +33,4 @@ class Request(object):
 	def default(self, *arguments, **kwargs):
 		raise cherrypy.HTTPError(404, "Invalid request: " + str(arguments) + " " + str(kwargs)) 
 		
-	def getBeitraege(self,thema,discussionname):
-		return templates.RenderTemplate("beitraege.html",title="Beitraege",beitraege=self.db.getBeitraege(thema,discussionname), thema = thema,discussionname = discussionname);
-
-	
 # EOF
