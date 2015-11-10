@@ -78,21 +78,26 @@ class Datenbank(object):
 
 		discussion["Beitraege"] = sorted(discussion["Beitraege"], key=itemgetter('Erstellt')) 
 		
-		length = len(discussion["Beitraege"] ) 
-		if length == 0 and cherrypy.session["Benutzername"] == discussion["Ersteller"]:
-			discussion["Bearbeitbar"]  = True
+		if authentifizierung.IsLoggedIn():
+			length = len(discussion["Beitraege"] ) 
+			if length == 0 and cherrypy.session["Benutzername"] == discussion["Ersteller"]:
+				discussion["Bearbeitbar"]  = True
+			else:
+				discussion["Bearbeitbar"]  = False
+				id = None
+				if discussion["Beitraege"] [length-1]["Ersteller"] == cherrypy.session["Benutzername"] :
+					id = discussion["Beitraege"] [length-1]["ID"]
+				
+				for post in discussion["Beitraege"]:
+					if id != None and id ==post["ID"] :
+						post["Bearbeitbar"]  = True
+					else:
+						post["Bearbeitbar"]  = False
 		else:
 			discussion["Bearbeitbar"]  = False
-			id = None
-			if discussion["Beitraege"] [length-1]["Ersteller"] == cherrypy.session["Benutzername"] :
-				id = discussion["Beitraege"] [length-1]["ID"]
-			
 			for post in discussion["Beitraege"]:
-				if id != None and id ==post["ID"] :
-					post["Bearbeitbar"]  = True
-				else:
 					post["Bearbeitbar"]  = False
-		
+					
 		return discussion
 		
 
@@ -122,13 +127,20 @@ class Datenbank(object):
 			discussion = json.load(discussionfile)
 
 		if beitragID == None:
-			discussion["Status"] = "deleted"
+			if discussion["Status"] == "deleted":
+				discussion["Status"] = " "
+			else:
+				discussion["Status"] = "deleted"
+			
 			discussion["Bearbeiter"] = cherrypy.session["Benutzername"]
 			discussion["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
 		else:
 			for post in discussion["Beitraege"]:
 				if post["ID"] == beitragID:
-					post["Status"] = "deleted"
+					if post["Status"] == "deleted":
+						post["Status"] = " "
+					else:
+						post["Status"] = "deleted"
 					post["Bearbeiter"] = cherrypy.session["Benutzername"]
 					post["Bearbeitet"] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())	
 

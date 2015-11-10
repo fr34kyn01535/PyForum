@@ -9,7 +9,7 @@
 </ul>
 <br/>
 
-<div class="panel panel-default diskussion">
+<div class="panel diskussion panel-primary">
     <div class="panel-heading">${diskussion["Titel"]}</div>
     <div class="panel-body">
 	   <div class="list-group">
@@ -39,22 +39,16 @@
 				<button onclick="ShowHide('BearbeitenFormular')" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
 				<form method="POST" action="/beitraege">
 					<div id="BearbeitenFormular" style="DISPLAY: none">
-					<ul class="wmfg_questions">
+			
 					<input type="hidden" name="thema" value="${thema}"/>
 					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-					<li class="wmfg_q">
-						<input type="text" class="form-control" name="title" value="${diskussion["Titel"]}">
-					</li>
-
-					<li class="wmfg_q">
-						
-						<textarea input type="text" class="form-control"  name="text" style="height:180px">${diskussion["Text"]}</textarea>
-					</li>
-
-					<li class="wmfg_q">
-						<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>
-					</li>
-					</ul>
+			
+					<input type="text" class="form-control" name="title" value="${diskussion["Titel"]}">
+		
+					<textarea input type="text" class="form-control"  name="text" style="height:180px">${diskussion["Text"]}</textarea>
+		
+					<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>
+				
 					</div>
 				</form>
 			% endif
@@ -99,26 +93,18 @@
 			% endif
 
 			% if role=="Administrator" or beitrag["Bearbeitbar"] == True: 
-				<button onclick="ShowHide('BearbeitenFormular')" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
+				<button data-toggle="BearbeitenFormular" style="float:right;" class="btn btn-primary btn-xs toggleButton"><i class="mdi-content-create"></i></button>
 				<form method="POST" action="/beitraege">
 					<div id="BearbeitenFormular" style="DISPLAY: none">
-					<ul class="wmfg_questions">
-					<input type="hidden" name="thema" value="${thema}"/>
-					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-					<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
-					<li class="wmfg_q">
-						<input type="text" class="form-control" name="title" value="${beitrag["Titel"]}">
-					</li>
-
-					<li class="wmfg_q">
+					
+						<input type="hidden" name="thema" value="${thema}"/>
+						<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+						<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
 						
+						<input type="text" class="form-control" name="title" value="${beitrag["Titel"]}">
 						<textarea input type="text" class="form-control"  name="text" style="height:180px">${beitrag["Text"]}</textarea>
-					</li>
-
-					<li class="wmfg_q">
 						<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>
-					</li>
-					</ul>
+
 					</div>
 				</form>
 			% endif
@@ -131,47 +117,29 @@
 %endfor
 
 % if role=="Administrator" or role=="Bearbeiter":
-<button onclick="ShowHide('ErstellenFormular')" style="float:right;" class="btn btn-raised btn-material-green"><i class="mdi-content-add"></i></button>
+<button data-toggle="ErstellenFormular" style="float:right;" class="btn btn-raised btn-material-green toggleButton"><i class="mdi-content-add"></i></button>
 % endif
 <div style="clear:both;"></div>
  
 <form method="POST" action="/beitraege">
 <div id="ErstellenFormular" style="DISPLAY: none">
-<ul class="wmfg_questions">
+
 	<input type="hidden" name="thema" value="${thema}"/>
 	<input type="hidden" name="id" value="${diskussion["ID"]}"/>
 
-	<li class="wmfg_q">
-		<input type="text" class="form-control floating-label" placeholder="Titel" name="title">
-	</li>
+	<input type="text" class="form-control floating-label" placeholder="Titel" name="title">
 
-	<li class="wmfg_q">
-		
-		<textarea input type="text" class="form-control floating-label" placeholder="Text" name="text" style="height:180px"></textarea>
-	</li>
 
-	<li class="wmfg_q">
-		<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
+	<textarea input type="text" class="form-control floating-label" placeholder="Text" name="text" style="height:180px"></textarea>
 
-	</li>
+	<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
 
-</ul>
 </div>
 </form>
 <div style="clear:both;"></div>
 
 <br/>
 
-<script>
-function ShowHide(id){
-	if(document.getElementById(id).style.display == 'none'){
-		document.getElementById(id).style.display='block';
-	}else{
-		document.getElementById(id).style.display = 'none';
-	}
-}
-
-</script>	
 
 <%include file="footer.html"/>
 

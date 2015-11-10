@@ -8,7 +8,7 @@
 </ul>
 <br/>
 
-<div id="HiddneDiv" style="DISPLAY: none">
+<div id="hiddenDiv" style="display: none">
 	<form method="POST" action="/diskussionen">
 	<ul class="wmfg_questions">
 		<input type="hidden" name="thema" value="${thema}"/>
@@ -27,7 +27,9 @@
 </div>
 
 % if role=="Administrator" or role=="Bearbeiter": 	 	
-<button onclick="ShowHide()" style="float:right;" class="btn btn-raised btn-material-green"><i class="mdi-content-add"></i></button>
+<button style="float:right;" class="btn btn-raised btn-material-green toggleButton" data-toggle="hiddenDiv"><i class="mdi-content-add"></i></button>
+
+
 % endif
 
 <div style="clear:both;"></div>
@@ -49,7 +51,7 @@
 					<div class="least-content"></div>
 
 					%if diskussion["Status"] == "deleted":
-						<h4 class="list-group-item-heading">${diskussion["Titel"]}</a>
+						<h4 class="list-group-item-heading">${diskussion["Titel"]} [Gelöscht]</a>
 						%else:
 						<h4 class="list-group-item-heading"><a href="/beitraege?thema=${thema}&id=${diskussion["ID"]}">${diskussion["Titel"]}</a>
 					%endif
@@ -83,20 +85,7 @@
  
 	   
     </div>
-</div>
-
-<script>
-
-
-function ShowHide(){
-	if(document.getElementById("HiddneDiv").style.display == 'none'){
-		document.getElementById("HiddneDiv").style.display='block';
-	}else{
-		document.getElementById("HiddneDiv").style.display = 'none';
-	}
-}
-
-</script>	  
+</div> 
 
 <%include file="footer.html"/>
 
