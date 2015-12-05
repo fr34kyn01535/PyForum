@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1449334192.302568
+_modified_time = 1449337491.118413
 _enable_loop = True
 _template_filename = 'templates/beitraege.html'
 _template_uri = 'beitraege.html'
@@ -16,7 +16,7 @@ _exports = []
 def render_body(context,title,thema,diskussion,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        __M_locals = __M_dict_builtin(thema=thema,title=title,pageargs=pageargs,diskussion=diskussion)
+        __M_locals = __M_dict_builtin(pageargs=pageargs,thema=thema,title=title,diskussion=diskussion)
         role = context.get('role', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\r\n')
@@ -33,7 +33,7 @@ def render_body(context,title,thema,diskussion,**pageargs):
         __M_writer(filters.decode.utf8(diskussion["Text"]))
         __M_writer('\r\n')
         if role=="Administrator": 
-            __M_writer('\t\t\t<form method="POST" action="/diskussionen">\r\n\t\t\t\t<input type="hidden" name="thema" value="')
+            __M_writer('\t\t\t<form method="POST" action="/beitraege">\r\n\t\t\t\t<input type="hidden" name="thema" value="')
             __M_writer(filters.decode.utf8(thema))
             __M_writer('"/>\r\n\t\t\t\t<input type="hidden" name="id" value="')
             __M_writer(filters.decode.utf8(diskussion["ID"]))
@@ -138,6 +138,6 @@ def render_body(context,title,thema,diskussion,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"filename": "templates/beitraege.html", "line_map": {"16": 2, "22": 2, "23": 3, "24": 3, "25": 7, "26": 7, "27": 7, "28": 7, "29": 8, "30": 8, "31": 13, "32": 13, "33": 16, "34": 16, "35": 17, "36": 18, "37": 19, "38": 19, "39": 20, "40": 20, "41": 24, "42": 25, "43": 38, "44": 38, "45": 39, "46": 39, "47": 40, "48": 40, "49": 42, "50": 42, "51": 56, "52": 59, "53": 59, "54": 60, "55": 61, "56": 61, "57": 61, "58": 63, "59": 64, "60": 64, "61": 65, "62": 66, "63": 66, "64": 66, "65": 68, "66": 74, "67": 75, "68": 77, "69": 78, "70": 80, "71": 81, "72": 81, "73": 86, "74": 87, "75": 88, "76": 89, "77": 89, "78": 89, "79": 91, "80": 92, "81": 93, "82": 94, "83": 94, "84": 95, "85": 95, "86": 96, "87": 96, "88": 97, "89": 98, "90": 99, "91": 100, "92": 102, "93": 104, "94": 105, "95": 106, "96": 106, "97": 108, "98": 108, "99": 118, "100": 118, "101": 119, "102": 119, "103": 120, "104": 120, "105": 121, "106": 121, "107": 123, "108": 123, "109": 136, "110": 139, "111": 139, "112": 140, "113": 141, "114": 141, "115": 141, "116": 143, "117": 144, "118": 144, "119": 145, "120": 146, "121": 146, "122": 146, "123": 148, "124": 154, "125": 155, "126": 156, "127": 160, "128": 176, "129": 176, "130": 177, "131": 177, "132": 200, "133": 200, "139": 133}, "source_encoding": "utf-8", "uri": "beitraege.html"}
+{"source_encoding": "utf-8", "line_map": {"16": 2, "22": 2, "23": 3, "24": 3, "25": 7, "26": 7, "27": 7, "28": 7, "29": 8, "30": 8, "31": 13, "32": 13, "33": 16, "34": 16, "35": 17, "36": 18, "37": 19, "38": 19, "39": 20, "40": 20, "41": 24, "42": 25, "43": 38, "44": 38, "45": 39, "46": 39, "47": 40, "48": 40, "49": 42, "50": 42, "51": 56, "52": 59, "53": 59, "54": 60, "55": 61, "56": 61, "57": 61, "58": 63, "59": 64, "60": 64, "61": 65, "62": 66, "63": 66, "64": 66, "65": 68, "66": 74, "67": 75, "68": 77, "69": 78, "70": 80, "71": 81, "72": 81, "73": 86, "74": 87, "75": 88, "76": 89, "77": 89, "78": 89, "79": 91, "80": 92, "81": 93, "82": 94, "83": 94, "84": 95, "85": 95, "86": 96, "87": 96, "88": 97, "89": 98, "90": 99, "91": 100, "92": 102, "93": 104, "94": 105, "95": 106, "96": 106, "97": 108, "98": 108, "99": 118, "100": 118, "101": 119, "102": 119, "103": 120, "104": 120, "105": 121, "106": 121, "107": 123, "108": 123, "109": 136, "110": 139, "111": 139, "112": 140, "113": 141, "114": 141, "115": 141, "116": 143, "117": 144, "118": 144, "119": 145, "120": 146, "121": 146, "122": 146, "123": 148, "124": 154, "125": 155, "126": 156, "127": 160, "128": 176, "129": 176, "130": 177, "131": 177, "132": 200, "133": 200, "139": 133}, "uri": "beitraege.html", "filename": "templates/beitraege.html"}
 __M_END_METADATA
 """

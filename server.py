@@ -33,6 +33,8 @@ def main():
 	cherrypy.engine.timeout_monitor.unsubscribe()
 	
 	dynamic = {'/': {
+		'tools.encode.on': True,
+		'tools.encode.encoding': 'utf-8',
 		'tools.sessions.on': True, 
 		'request.dispatch': cherrypy.dispatch.MethodDispatcher()
 	}};

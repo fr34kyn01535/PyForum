@@ -15,7 +15,7 @@
 	<div class="panel-body">
 		${diskussion["Text"]}
 		% if role=="Administrator": 
-			<form method="POST" action="/diskussionen">
+			<form method="POST" action="/beitraege">
 				<input type="hidden" name="thema" value="${thema}"/>
 				<input type="hidden" name="id" value="${diskussion["ID"]}"/>
 				<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>

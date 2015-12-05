@@ -8,8 +8,63 @@
 </ul>
 <br/>
 
+<script type="text/javascript">
+
+	$(function(){
+		$("#newDiscussionButton").click(function(){
+			$("#discussionContainer").html("Lade...");
+			
+			var title = $('#newDiscussion input[name="title"]').val();
+			var text = $('#newDiscussion textarea[name="text"]').val();
+			
+			var data = {"thema":"${thema}","title":title,"text":text,"action":"create"};
+		
+			$.ajax({
+			  type: "POST",
+			  url: "/diskussionen",
+			  data: data,
+			  success: function(response,textStatus,jqXHR){
+					$("#discussionContainer").html(response);
+					bindDiscussionEvents();
+			  },
+			  complete: function(jqXHR,textStatus){
+				$('#newDiscussion').modal('hide');
+			  },
+			  error: function(jqXHR,textStatus,thrownError) {		
+					$("#discussionContainer").html("Ajax Fehler: "+thrownError);
+				},
+			  dataType: "html"
+			});
+		
+		});
+		bindDiscussionEvents();
+		$(document).ajaxError(function(e, request, settings,thrownError ) {
+			console.log("Ajax Error: "+thrownError);
+		});
+	});
+
+	function bindDiscussionEvents(){
+		$('.deleteDiscussion').click(function(){
+				var id = $(this).val();
+				var data = {"thema":"${thema}","id":id,"action":"delete"};
+					
+				$.ajax({
+				  type: "POST",
+				  url: "/diskussionen",
+				  data: data,
+				  success: function(response,textStatus,jqXHR){
+						$("#discussionContainer").html(response);
+						bindDiscussionEvents();
+				  },error: function(jqXHR,textStatus,thrownError) {		
+						$("#discussionContainer").html("Ajax Fehler: "+thrownError);
+					},
+				  dataType: "html"
+				});
+			});
+	};
+</script>
+
 <div id="newDiscussion" class="modal fade">
-	<form method="POST" action="/diskussionen">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header">
@@ -18,23 +73,16 @@
 		  </div>
 		  <div class="modal-body">
 			
-			
-		<input type="hidden" name="thema" value="${thema}"/>
 			<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="title">
 	<br/>
 			<textarea class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>
-	
-	
-			
-			
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-			<button type="submit" name="action" value="create" class="btn btn-primary">Erstellen</button>
+			<button id="newDiscussionButton" type="button" name="action" value="create" class="btn btn-primary">Erstellen</button>
 		  </div>
 		</div>
 	  </div>	
-	  </form>
 	</div>
 
 % if role=="Administrator" or role=="Bearbeiter": 	 
@@ -52,46 +100,8 @@
     <div class="panel-heading">Diskussionen</div>
     <div class="panel-body">
        
-	   <div class="list-group">
-	   %for diskussion in diskussionen:
- 
-			<div class="list-group-item">
-				<div class="row-action-primary">
-					<i class="mdi-file-folder"></i>
-				</div>
-				<div class="row-content">
-					<div class="least-content"></div>
-
-					%if diskussion["Status"] == "deleted":
-						<h4 class="list-group-item-heading">${diskussion["Titel"]} [Gelöscht]</h4>	
-						%else:
-						<h4 class="list-group-item-heading"><a href="/beitraege?thema=${thema}&amp;id=${diskussion["ID"]}">${diskussion["Titel"]}</a></h4>	
-					%endif
-					
-					% if role=="Administrator": 
-						<form method="POST" action="/diskussionen">
-						<input type="hidden" name="thema" value="${thema}"/>
-						<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-						<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
-						</form>
-					% endif
-
-									
-					<br/>
-
-					<p class="list-group-item-text">von ${diskussion["Ersteller"]} (${diskussion["Erstellt"]})</p>
-
-					% if diskussion["Bearbeiter"] != " ": 
-						<p class="list-group-item-text">zuletzt bearbeitet von ${diskussion["Bearbeiter"]} (${diskussion["Bearbeitet"]})</p>
-					% endif
-
-
-				</div>
-			</div>
-			
-			<div class="list-group-separator"></div>
-			
-		%endfor
+	   <div id="discussionContainer" class="list-group">
+	   <%include file="diskussionen-liste.html"/>
 </div>
 	   
  
