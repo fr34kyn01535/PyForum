@@ -8,26 +8,38 @@
 </ul>
 <br/>
 
-<div id="hiddenDiv" style="display: none">
+<div id="newDiscussion" class="modal fade">
 	<form method="POST" action="/diskussionen">
-	<ul class="wmfg_questions">
-		<input type="hidden" name="thema" value="${thema}"/>
-		<li class="wmfg_q">
-			<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="title">
-		</li>
-		<li class="wmfg_q">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h4 class="modal-title">Neue Diskussion</h4>
+		  </div>
+		  <div class="modal-body">
 			
-			<textarea input type="text" class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>
-		</li>
-		<li class="wmfg_q">
-			<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
-		</li>
-	</ul>
-</form>
-</div>
+			
+		<input type="hidden" name="thema" value="${thema}"/>
+			<input type="text" class="form-control floating-label" required="required" placeholder="Titel" name="title">
+	<br/>
+			<textarea class="form-control floating-label" required="required" placeholder="Text" name="text" style="height:180px"></textarea>
+	
+	
+			
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+			<button type="submit" name="action" value="create" class="btn btn-primary">Erstellen</button>
+		  </div>
+		</div>
+	  </div>	
+	  </form>
+	</div>
 
-% if role=="Administrator" or role=="Bearbeiter": 	 	
-<button style="float:right;" class="btn btn-raised btn-material-green toggleButton" data-toggle="hiddenDiv"><i class="mdi-content-add"></i></button>
+% if role=="Administrator" or role=="Bearbeiter": 	 
+
+<button style="float:right;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newDiscussion">Neue Diskussion</button>
 
 
 % endif
@@ -51,9 +63,9 @@
 					<div class="least-content"></div>
 
 					%if diskussion["Status"] == "deleted":
-						<h4 class="list-group-item-heading">${diskussion["Titel"]} [Gelöscht]</a>
+						<h4 class="list-group-item-heading">${diskussion["Titel"]} [Gelöscht]</h4>	
 						%else:
-						<h4 class="list-group-item-heading"><a href="/beitraege?thema=${thema}&id=${diskussion["ID"]}">${diskussion["Titel"]}</a>
+						<h4 class="list-group-item-heading"><a href="/beitraege?thema=${thema}&amp;id=${diskussion["ID"]}">${diskussion["Titel"]}</a></h4>	
 					%endif
 					
 					% if role=="Administrator": 
@@ -64,7 +76,7 @@
 						</form>
 					% endif
 
-					</h4>					
+									
 					<br/>
 
 					<p class="list-group-item-text">von ${diskussion["Ersteller"]} (${diskussion["Erstellt"]})</p>
