@@ -23,28 +23,50 @@
 		% endif
 		% if role=="Administrator" or diskussion["Bearbeitbar"] == True: 
 
-			<button onclick="ShowHide('BearbeitenFormular-)" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
-			<form method="POST" action="/beitraege">
-				<div id="BearbeitenFormular" style="DISPLAY: none">
-		
-				<input type="hidden" name="thema" value="${thema}"/>
-				<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-		
-				<input type="text" class="form-control" name="title" value="${diskussion["Titel"]}">
-	
-				<textarea input type="text" class="form-control"  name="text" style="height:180px">${diskussion["Text"]}</textarea>
-	
-				<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Speichern</button>
+			<button style="float:right;" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editPost"><i class="mdi-content-create"></i></button>
+
+			<div id="editPost" class="modal fade">
+				<form method="POST" action="/beitraege">
+					<div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title">Beitrag bearbeiten</h4>
+						  </div>
+						  <div class="modal-body">
+							
+								<input type="hidden" name="thema" value="${thema}"/>
+								<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+								<input type="text" class="form-control" name="title" value="${diskussion["Titel"]}">
+								<br/>
+								<textarea class="form-control"  name="text" style="height:180px">${diskussion["Text"]}</textarea>
+				
+				
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+							<button type="submit" name="action" value="edit" class="btn btn-primary">Speichern</button>
+						  </div>
+						</div>
+					</div>	
+				</form>
+			</div>
 			
-				</div>
-			</form>
 		% endif
-	</div>  
-	<div class="panel-footer">
-		<ul class="post-info">
-			<li>Autor: ${diskussion["Ersteller"]}</li>
-			<li>Geschrieben: ${diskussion["Erstellt"]}</li>
-		</ul>
+	</div> 
+	<div class="panel-footer post-info">
+		<table>
+		<tr><td>Autor: ${diskussion["Ersteller"]}</td><td>
+		 %if diskussion["Bearbeiter"] != " ":
+		 Bearbeiter: ${diskussion["Bearbeiter"]}
+		 %endif
+		 </td></tr>
+		<tr><td>Erstellt am: ${diskussion["Erstellt"]}</td><td>
+		%if diskussion["Bearbeitet"] != " ":
+		Bearbeitet am: ${diskussion["Bearbeitet"]}
+		%endif
+		</td></tr>
+		</table>
 	</div>
 </div>
 
@@ -80,52 +102,96 @@
 				</form>
 			% endif
 			% if role=="Administrator" or beitrag["Bearbeitbar"] == True: 
-				<button data-toggle="BearbeitenFormular-${beitrag["ID"]}" style="float:right;" class="btn btn-primary btn-xs toggleButton"><i class="mdi-content-create"></i></button>
-				<form method="POST" action="/beitraege">
-					<div id="BearbeitenFormular-${beitrag["ID"]}" style="DISPLAY: none">
-					
-						<input type="hidden" name="thema" value="${thema}"/>
-						<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-						<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
-						
-						<input type="text" class="form-control" name="title" value="${beitrag["Titel"]}">
-						<textarea input type="text" class="form-control"  name="text" style="height:180px">${beitrag["Text"]}</textarea>
-						<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>
+				
+					<button style="float:right;" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editPost-${beitrag["ID"]}"><i class="mdi-content-create"></i></button>
 
-					</div>
-				</form>
+				<div id="editPost-${beitrag["ID"]}" class="modal fade">
+					<form method="POST" action="/beitraege">
+						<div class="modal-dialog">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h4 class="modal-title">Beitrag bearbeiten</h4>
+							  </div>
+							  <div class="modal-body">
+								
+								<input type="hidden" name="thema" value="${thema}"/>
+								<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+								<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
+								<input type="text" class="form-control" name="title" value="${beitrag["Titel"]}">
+								<br/>
+								<textarea class="form-control"  name="text" style="height:180px">${beitrag["Text"]}</textarea>
+								
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+								<button type="submit" name="action" value="edit" class="btn btn-primary">Speichern</button>
+							  </div>
+							</div>
+						</div>	
+					</form>
+				</div>
+
 			% endif
 	</div>
-	<div class="panel-footer">
-		<ul class="post-info">
-			<li>Autor: ${diskussion["Ersteller"]}</li>
-			<li>Geschrieben: ${diskussion["Erstellt"]}</li>
-		</ul>
+	<div class="panel-footer post-info">
+		<table>
+		<tr><td>Autor: ${beitrag["Ersteller"]}</td><td>
+		 %if beitrag["Bearbeiter"] != " ":
+		 Bearbeiter: ${beitrag["Bearbeiter"]}
+		 %endif
+		 </td></tr>
+		<tr><td>Erstellt am: ${beitrag["Erstellt"]}</td><td>
+		%if beitrag["Bearbeitet"] != " ":
+		Bearbeitet am: ${beitrag["Bearbeitet"]}
+		%endif
+		</td></tr>
+		</table>
 	</div>
 </div>
 
 %endfor
 
 % if role=="Administrator" or role=="Bearbeiter":
-<button data-toggle="ErstellenFormular" style="float:right;" class="btn btn-raised btn-material-green toggleButton"><i class="mdi-content-add"></i></button>
+
+<button style="float:right;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPost">Neuer Beitrag</button>
+
 % endif
 <div style="clear:both;"></div>
  
-<form method="POST" action="/beitraege">
-<div id="ErstellenFormular" style="DISPLAY: none">
-
-	<input type="hidden" name="thema" value="${thema}"/>
+ 
+ 
+ 
+ 
+<div id="newPost" class="modal fade">
+	<form method="POST" action="/beitraege">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h4 class="modal-title">Neuer Beitrag</h4>
+		  </div>
+		  <div class="modal-body">
+			
+		<input type="hidden" name="thema" value="${thema}"/>
 	<input type="hidden" name="id" value="${diskussion["ID"]}"/>
 
 	<input type="text" class="form-control floating-label" placeholder="Titel" name="title">
+	<br/>
+	<textarea class="form-control floating-label" placeholder="Text" name="text" style="height:180px"></textarea>
 
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+			<button type="submit" name="action" value="create" class="btn btn-primary">Erstellen</button>
+		  </div>
+		</div>
+	  </div>	
+	  </form>
+	</div>
 
-	<textarea input type="text" class="form-control floating-label" placeholder="Text" name="text" style="height:180px"></textarea>
-
-	<button type="submit" name="action" value="create" class="btn btn-primary btn-material-green btn-sm">Erstellen</button>
-
-</div>
-</form>
+ 
 <div style="clear:both;"></div>
 
 <br/>
