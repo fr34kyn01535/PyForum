@@ -2,21 +2,22 @@
 <!DOCTYPE html><%page args="title"/>
 <html>
    <head>
-      <title>PyForum | ${title}</title>
-      <meta charset="UTF-8" />    
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/roboto.min.css" rel="stylesheet">
-        <link href="/css/material-fullpalette.min.css" rel="stylesheet">
-        <link href="/css/ripples.min.css" rel="stylesheet">
-		
+		<title>PyForum | ${title}</title>
+		<meta charset="UTF-8" />    
+		<link rel="shortcut icon" type="image/x-icon" href="/css/favicon.ico">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/roboto.min.css" rel="stylesheet">
+		<link href="/css/material-fullpalette.min.css" rel="stylesheet">
+		<link href="/css/ripples.min.css" rel="stylesheet">
+
 		<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/material.min.js"></script>
 		<script type="text/javascript" src="/js/ripples.min.js"></script>
 		<script type="text/javascript" src="/js/custom.js"></script>
-		
+
 		<link href="/css/custom.css" rel="stylesheet" />
-		
+
 		<script type="text/javascript">
 			$(function(){
 				$.material.init();
@@ -51,9 +52,6 @@
 				<li title="${role}"><a href="#">${username}</a></li><li><a style="padding:16px !important;" href="/logout" title="Ausloggen"><i class="mdi-action-lock-outline"></i></a></li>
 			% endif
 			
-			
-			
-		
 		
         </ul>
   </div>

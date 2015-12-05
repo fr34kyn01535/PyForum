@@ -30,3 +30,19 @@ font-weight:bold;
 .post-info table{
 	width: 100%;
 }
+.user-details{
+	position:absolute;
+	top:40px;
+	left:0px;
+	width:100px;
+	height:90px;
+}
+
+.user-details table{
+	width:100%;
+	margin-top:15px;
+	text-align:center;
+}
+.panel{
+position:relative;
+}
