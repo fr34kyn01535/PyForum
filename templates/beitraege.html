@@ -11,91 +11,78 @@
 
 <div class="panel diskussion panel-primary">
     <div class="panel-heading">${diskussion["Titel"]}</div>
-    <div class="panel-body">
-	   <div class="list-group">
-   			<p class="list-group-item-text datum">(${diskussion["Erstellt"]})</p>
-			<div class="list-group-item">
-				<table class="table">
-					<td style="width:100px;">
-						<p class="list-group-item-text">${diskussion["Ersteller"]}</p></i>
-					</td>
-					<td>
-						<div class="least-content"></div>						
-						<p class="list-group-item-text">${diskussion["Text"]}</p>
-					</td>
-				</table>
-			</div>
-			<div class="list-group-separator"></div>
+  
+	<div class="panel-body">
+		${diskussion["Text"]}
+		% if role=="Administrator": 
+			<form method="POST" action="/diskussionen">
+				<input type="hidden" name="thema" value="${thema}"/>
+				<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+				<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
+			</form>
+		% endif
+		% if role=="Administrator" or diskussion["Bearbeitbar"] == True: 
 
-			% if role=="Administrator": 
-				<form method="POST" action="/diskussionen">
-					<input type="hidden" name="thema" value="${thema}"/>
-					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
-				</form>
-			% endif
-			% if role=="Administrator" or diskussion["Bearbeitbar"] == True: 
+			<button onclick="ShowHide('BearbeitenFormular-)" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
+			<form method="POST" action="/beitraege">
+				<div id="BearbeitenFormular" style="DISPLAY: none">
+		
+				<input type="hidden" name="thema" value="${thema}"/>
+				<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+		
+				<input type="text" class="form-control" name="title" value="${diskussion["Titel"]}">
+	
+				<textarea input type="text" class="form-control"  name="text" style="height:180px">${diskussion["Text"]}</textarea>
+	
+				<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Speichern</button>
+			
+				</div>
+			</form>
+		% endif
+	</div>  
+	<div class="panel-footer">
+		<ul class="post-info">
+			<li>Autor: ${diskussion["Ersteller"]}</li>
+			<li>Geschrieben: ${diskussion["Erstellt"]}</li>
+		</ul>
+	</div>
+</div>
 
-				<button onclick="ShowHide('BearbeitenFormular')" style="float:right;" class="btn btn-primary btn-xs"><i class="mdi-content-create"></i></button>
-				<form method="POST" action="/beitraege">
-					<div id="BearbeitenFormular" style="DISPLAY: none">
-			
-					<input type="hidden" name="thema" value="${thema}"/>
-					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-			
-					<input type="text" class="form-control" name="title" value="${diskussion["Titel"]}">
-		
-					<textarea input type="text" class="form-control"  name="text" style="height:180px">${diskussion["Text"]}</textarea>
-		
-					<button type="submit" name="action" value="edit" class="btn btn-primary btn-material-green btn-sm">Bearbeiten</button>
-				
-					</div>
-				</form>
-			% endif
-</div>
-    </div>
-</div>
 
 %for beitrag in diskussion["Beitraege"]:
 
-<div class="panel panel-default beitrag">
+<div class="panel panel-default beitrag
+ %if beitrag["Status"] == "deleted":
+	panel-danger
+ %endif
+">
     <div class="panel-heading">${beitrag["Titel"]}</div>
-    <div class="panel-body">
-	   
-	   %if beitrag["Status"] == "deleted":
-	   
-			Dieser Beitrag wurde gelöscht.
-	   
-	   %else:
-	   
-	   <div class="list-group">
-   			<p class="list-group-item-text datum">(${beitrag["Erstellt"]})</p>
-			<div class="list-group-item">
-				<table class="table">
-					<td style="width:100px;">
-						<p class="list-group-item-text">${beitrag["Ersteller"]}</p></i>
-					</td>
-					<td>
-						<div class="least-content"></div>						
-						<p class="list-group-item-text">${beitrag["Text"]}</p>
-					</td>
-				</table>
-			</div>
-			<div class="list-group-separator"></div>
+    
 
+	<div class="panel-body">
+
+	 %if beitrag["Status"] == "deleted":
+			<b>Dieser Beitrag wurde gelöscht.</b>
+	   %else:
+				${beitrag["Text"]}
+		% endif
+	
 			% if role=="Administrator": 
 				<form method="POST" action="/beitraege">
 					<input type="hidden" name="thema" value="${thema}"/>
 					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
 					<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
+					%if beitrag["Status"] == "deleted":
+					<button style="float:right;" name="action" value="delete" class="btn btn-material-green btn-xs"><i class="mdi-action-done"></i></button>
+				%else:
 					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
+				% endif
 				</form>
 			% endif
-
 			% if role=="Administrator" or beitrag["Bearbeitbar"] == True: 
-				<button data-toggle="BearbeitenFormular" style="float:right;" class="btn btn-primary btn-xs toggleButton"><i class="mdi-content-create"></i></button>
+				<button data-toggle="BearbeitenFormular-${beitrag["ID"]}" style="float:right;" class="btn btn-primary btn-xs toggleButton"><i class="mdi-content-create"></i></button>
 				<form method="POST" action="/beitraege">
-					<div id="BearbeitenFormular" style="DISPLAY: none">
+					<div id="BearbeitenFormular-${beitrag["ID"]}" style="DISPLAY: none">
 					
 						<input type="hidden" name="thema" value="${thema}"/>
 						<input type="hidden" name="id" value="${diskussion["ID"]}"/>
@@ -108,12 +95,15 @@
 					</div>
 				</form>
 			% endif
+	</div>
+	<div class="panel-footer">
+		<ul class="post-info">
+			<li>Autor: ${diskussion["Ersteller"]}</li>
+			<li>Geschrieben: ${diskussion["Erstellt"]}</li>
+		</ul>
+	</div>
 </div>
 
-% endif
-
-    </div>
-</div>
 %endfor
 
 % if role=="Administrator" or role=="Bearbeiter":
