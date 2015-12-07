@@ -1,5 +1,6 @@
 # coding: utf-8
 import cherrypy
+import json
 from app import datenbank,templates,authentifizierung
 
 class Request(object):
@@ -8,11 +9,25 @@ class Request(object):
 	def __init__(self):
 		self.db = datenbank.Datenbank()
 
+	def dumper(obj):
+		try:
+			return obj.toJSON()
+		except:
+			return obj.__dict__
+		
 	def POST(self,action,thema,id=None, title=None,text=None,beitragID=None):
 		authentifizierung.ValidateLoggedIn()
 		if action == "create":
 			self.db.createDiskussion(thema,title, text)
-			return self.GET(thema)
+			
+			#result = {};
+			#result["diskussionen"] = self.db.getDiskussionen(thema)
+			#result["thema"] = thema
+			#cherrypy.response.headers['Content-Type']= 'text/plain'
+			#return json.dumps(result)
+			
+			return templates.RenderTemplate("diskussionen-liste.html",diskussionen=self.db.getDiskussionen(thema), thema = thema)
+
 		else:
 			authentifizierung.ValidateLoggedIn()
 			if action == "edit":
@@ -22,9 +37,8 @@ class Request(object):
 				authentifizierung.ValidateAdmin()
 				if action == "delete":
 					self.db.delete(thema, id,beitragID)
-					return self.GET(thema)
-			
-			
+					return templates.RenderTemplate("diskussionen-liste.html",diskussionen=self.db.getDiskussionen(thema), thema = thema)
+
 	def GET(self, thema):
 		response = self.getDiskussionen(thema);
 		if response == None:

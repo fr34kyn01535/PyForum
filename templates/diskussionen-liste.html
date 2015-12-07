@@ -1,0 +1,34 @@
+﻿%for diskussion in diskussionen:
+
+	<div class="list-group-item">
+		<div class="row-action-primary">
+			<i class="mdi-file-folder"></i>
+		</div>
+		<div class="row-content">
+			<div class="least-content"></div>
+
+			%if diskussion["Status"] == "deleted":
+				<h4 class="list-group-item-heading">${diskussion["Titel"]} [Gelöscht]</h4>	
+				%else:
+				<h4 class="list-group-item-heading"><a href="/beitraege?thema=${thema}&amp;id=${diskussion["ID"]}">${diskussion["Titel"]}</a></h4>	
+			%endif
+			
+				
+			% if role=="Administrator": 
+				<button style="float:right;" value="${diskussion["ID"]}" class="deleteDiscussion btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
+			% endif
+					
+
+			<p class="list-group-item-text">von ${diskussion["Ersteller"]} (${diskussion["Erstellt"]})</p>
+
+			% if diskussion["Bearbeiter"] != " ": 
+				<p class="list-group-item-text">zuletzt bearbeitet von ${diskussion["Bearbeiter"]} (${diskussion["Bearbeitet"]})</p>
+			% endif
+
+
+		</div>
+	</div>
+	
+	<div class="list-group-separator"></div>
+	
+%endfor

@@ -10,12 +10,20 @@
 <br/>
 
 <div class="panel diskussion panel-primary">
+	
+	<div class="user-details">
+			<table>
+			<tr><td><i class="mdi-action-face-unlock"></i></td></tr>
+			<tr><td><b>${diskussion["Ersteller"]}</b></td></tr>
+			</table>
+	</div>
+
     <div class="panel-heading">${diskussion["Titel"]}</div>
   
-	<div class="panel-body">
+	<div class="panel-body" style="margin-left:100px;min-height:75px;">
 		${diskussion["Text"]}
 		% if role=="Administrator": 
-			<form method="POST" action="/diskussionen">
+			<form method="POST" action="/beitraege">
 				<input type="hidden" name="thema" value="${thema}"/>
 				<input type="hidden" name="id" value="${diskussion["ID"]}"/>
 				<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
@@ -72,84 +80,83 @@
 
 
 %for beitrag in diskussion["Beitraege"]:
-
-<div class="panel panel-default beitrag
- %if beitrag["Status"] == "deleted":
-	panel-danger
- %endif
-">
-    <div class="panel-heading">${beitrag["Titel"]}</div>
-    
-
-	<div class="panel-body">
-
+	<div class="panel panel-primary beitrag
 	 %if beitrag["Status"] == "deleted":
-			<b>Dieser Beitrag wurde gelöscht.</b>
-	   %else:
-				${beitrag["Text"]}
-		% endif
-	
-			% if role=="Administrator": 
-				<form method="POST" action="/beitraege">
-					<input type="hidden" name="thema" value="${thema}"/>
-					<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-					<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
-					%if beitrag["Status"] == "deleted":
-					<button style="float:right;" name="action" value="delete" class="btn btn-material-green btn-xs"><i class="mdi-action-done"></i></button>
-				%else:
-					<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
-				% endif
-				</form>
-			% endif
-			% if role=="Administrator" or beitrag["Bearbeitbar"] == True: 
-				
-					<button style="float:right;" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editPost-${beitrag["ID"]}"><i class="mdi-content-create"></i></button>
+		panel-danger
+	 %endif
+	">
+		<div class="panel-heading">${beitrag["Titel"]}</div>
+		
+		<div class="user-details">
+			<table>
+			<tr><td><i class="mdi-action-face-unlock"></i></td></tr>
+			<tr><td><b>${beitrag["Ersteller"]}</b></td></tr>
+			</table>
+		</div>
+		
+		<div class="panel-body" style="margin-left:100px;min-height:75px;">
 
-				<div id="editPost-${beitrag["ID"]}" class="modal fade">
+		 %if beitrag["Status"] == "deleted":
+				<b>Dieser Beitrag wurde gelöscht.</b>
+		   %else:
+					${beitrag["Text"]}
+			% endif
+		
+				% if role=="Administrator": 
 					<form method="POST" action="/beitraege">
-						<div class="modal-dialog">
-							<div class="modal-content">
-							  <div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-								<h4 class="modal-title">Beitrag bearbeiten</h4>
-							  </div>
-							  <div class="modal-body">
-								
-								<input type="hidden" name="thema" value="${thema}"/>
-								<input type="hidden" name="id" value="${diskussion["ID"]}"/>
-								<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
-								<input type="text" class="form-control" name="title" value="${beitrag["Titel"]}">
-								<br/>
-								<textarea class="form-control"  name="text" style="height:180px">${beitrag["Text"]}</textarea>
-								
-							  </div>
-							  <div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-								<button type="submit" name="action" value="edit" class="btn btn-primary">Speichern</button>
-							  </div>
-							</div>
-						</div>	
+						<input type="hidden" name="thema" value="${thema}"/>
+						<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+						<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
+						%if beitrag["Status"] == "deleted":
+						<button style="float:right;" name="action" value="delete" class="btn btn-material-green btn-xs"><i class="mdi-action-done"></i></button>
+					%else:
+						<button style="float:right;" name="action" value="delete" class="btn btn-warning btn-xs"><i class="mdi-content-clear"></i></button>
+					% endif
 					</form>
-				</div>
+				% endif
+				% if role=="Administrator" or beitrag["Bearbeitbar"] == True: 
+					
+						<button style="float:right;" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editPost-${beitrag["ID"]}"><i class="mdi-content-create"></i></button>
 
-			% endif
-	</div>
-	<div class="panel-footer post-info">
-		<table>
-		<tr><td>Autor: ${beitrag["Ersteller"]}</td><td>
-		 %if beitrag["Bearbeiter"] != " ":
-		 Bearbeiter: ${beitrag["Bearbeiter"]}
-		 %endif
-		 </td></tr>
-		<tr><td>Erstellt am: ${beitrag["Erstellt"]}</td><td>
-		%if beitrag["Bearbeitet"] != " ":
-		Bearbeitet am: ${beitrag["Bearbeitet"]}
-		%endif
-		</td></tr>
-		</table>
-	</div>
-</div>
+					<div id="editPost-${beitrag["ID"]}" class="modal fade">
+						<form method="POST" action="/beitraege">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h4 class="modal-title">Beitrag bearbeiten</h4>
+								  </div>
+								  <div class="modal-body">
+									
+									<input type="hidden" name="thema" value="${thema}"/>
+									<input type="hidden" name="id" value="${diskussion["ID"]}"/>
+									<input type="hidden" name="beitragID" value="${beitrag["ID"]}"/>
+									<input type="text" class="form-control" name="title" value="${beitrag["Titel"]}">
+									<br/>
+									<textarea class="form-control"  name="text" style="height:180px">${beitrag["Text"]}</textarea>
+									
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+									<button type="submit" name="action" value="edit" class="btn btn-primary">Speichern</button>
+								  </div>
+								</div>
+							</div>	
+						</form>
+					</div>
 
+				% endif
+		</div>
+		<div class="panel-footer post-info">
+			<table>
+			<tr><td>Erstellt am: ${beitrag["Erstellt"]}</td></tr><tr><td>
+			%if beitrag["Bearbeitet"] != " ":
+			Bearbeitet am ${beitrag["Bearbeitet"]} von  ${beitrag["Bearbeiter"]}
+			%endif
+			</td></tr>
+			</table>
+		</div>
+	</div>
 %endfor
 
 % if role=="Administrator" or role=="Bearbeiter":
